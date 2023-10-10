@@ -1,4 +1,4 @@
-package consoleUI.serviceFactories;
+package serviceFactories;
 
 import applicationServices.services.TransactionServiceI;
 import modelRepositoriesI.TransactionRepositoryI;

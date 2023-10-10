@@ -1,4 +1,4 @@
-package consoleUI.serviceFactories;
+package serviceFactories;
 
 import applicationServices.services.PlayerServiceI;
 import repositoriesImpl.repoFactories.PlayerRepositoryFactory;

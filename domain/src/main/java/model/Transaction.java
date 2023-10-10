@@ -65,5 +65,7 @@ public class Transaction {
         this.id = id;
     }
 
-
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
 }

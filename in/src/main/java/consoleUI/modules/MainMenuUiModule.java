@@ -2,11 +2,9 @@ package consoleUI.modules;
 
 import applicationServices.exceptions.player.PlayerDontExistException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
-import applicationServices.services.PlayerLogServiceI;
 import applicationServices.services.PlayerServiceI;
 import consoleUI.input.ScannerFactory;
-import consoleUI.serviceFactories.PlayerLogServiceFactory;
-import consoleUI.serviceFactories.PlayerServiceFactory;
+import serviceFactories.PlayerServiceFactory;
 import model.Player;
 
 import java.util.Scanner;

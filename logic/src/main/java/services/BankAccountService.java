@@ -64,9 +64,6 @@ public class BankAccountService implements BankAccountServiceI {
         return true;
     }
 
-
-
-
     @Override
     public boolean depositMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException {
 

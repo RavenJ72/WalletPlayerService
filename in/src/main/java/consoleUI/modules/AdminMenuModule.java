@@ -6,10 +6,10 @@ import applicationServices.services.PlayerLogServiceI;
 import applicationServices.services.PlayerServiceI;
 import applicationServices.services.TransactionServiceI;
 import consoleUI.input.ScannerFactory;
-import consoleUI.serviceFactories.BankAccountServiceFactory;
-import consoleUI.serviceFactories.PlayerLogServiceFactory;
-import consoleUI.serviceFactories.PlayerServiceFactory;
-import consoleUI.serviceFactories.TransactionServiceFactory;
+import serviceFactories.BankAccountServiceFactory;
+import serviceFactories.PlayerLogServiceFactory;
+import serviceFactories.PlayerServiceFactory;
+import serviceFactories.TransactionServiceFactory;
 import model.Player;
 import model.PlayerLog;
 

@@ -37,4 +37,11 @@ public class BankAccount {
         this.balance = balance;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setPlayerTransactions(List<Transaction> playerTransactions) {
+        this.playerTransactions = playerTransactions;
+    }
 }

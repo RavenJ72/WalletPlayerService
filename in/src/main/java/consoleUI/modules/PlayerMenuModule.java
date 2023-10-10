@@ -2,11 +2,14 @@ package consoleUI.modules;
 
 import applicationServices.exceptions.BaseException;
 import applicationServices.services.*;
-import consoleUI.serviceFactories.*;
 import consoleUI.input.ScannerFactory;
 
 import model.Player;
 import model.PlayerLog;
+import serviceFactories.BankAccountServiceFactory;
+import serviceFactories.PlayerLogServiceFactory;
+import serviceFactories.PlayerServiceFactory;
+import serviceFactories.TransactionServiceFactory;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

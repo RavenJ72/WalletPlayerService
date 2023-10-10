@@ -19,6 +19,15 @@ public class PlayerLog {
         return login;
     }
 
+    public String getAction() {
+        return action;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+
     @Override
     public String toString() {
         return "Player: " + login + "\n" +

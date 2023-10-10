@@ -1,4 +1,4 @@
-package consoleUI.serviceFactories;
+package serviceFactories;
 
 import applicationServices.services.BankAccountServiceI;
 import repositoriesImpl.repoFactories.BankAccountRepositoryFactory;

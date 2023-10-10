@@ -9,7 +9,7 @@ public final class TransactionServiceFactory {
 
     private static TransactionServiceI transactionServiceInstance;
 
-    public static TransactionServiceI getTransactionService(TransactionRepositoryI transactionRepository) {
+    public static TransactionServiceI getTransactionService() {
         if (transactionServiceInstance == null) {
             transactionServiceInstance = new TransactionService(TransactionRepoFactory.getTransactionRepository());
         }

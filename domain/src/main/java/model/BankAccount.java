@@ -3,6 +3,7 @@ package model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BankAccount {
 
@@ -10,10 +11,10 @@ public class BankAccount {
     private BigDecimal balance;
     private List<Transaction> playerTransactions;
 
-    public BankAccount(String id, BigDecimal balance) {
-        this.id = id;
-        this.balance = balance;
-        this.playerTransactions =  new ArrayList<>();
+    public BankAccount() {
+        this.id = generateUniqueId();
+        this.balance = new BigDecimal("0.00");
+        this.playerTransactions = new ArrayList<>();
     }
 
     public String getId() {
@@ -26,5 +27,10 @@ public class BankAccount {
 
     public List<Transaction> getPlayerTransactions() {
         return playerTransactions;
+    }
+
+    private String generateUniqueId() {
+        // Генерируем уникальный ID с использованием UUID (Universally Unique Identifier)
+        return UUID.randomUUID().toString();
     }
 }

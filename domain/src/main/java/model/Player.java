@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 
 public class Player {
     private String login;
-    private String email;
+
     private String password;
     private LocalDateTime creationTime;
     private String playerRole;
 
     private String bankAccountId;
 
-    public Player(String nickname, String email, String password, String bankAccountId) {
+    public Player(String nickname, String password, String bankAccountId) {
         this.login = nickname;
-        this.email = email;
+
         this.password = password;
         this.bankAccountId = bankAccountId;
         this.creationTime = LocalDateTime.now();
@@ -24,9 +24,7 @@ public class Player {
         return login;
     }
 
-    public String getEmail() {
-        return email;
-    }
+
 
     public String getPassword() {
         return password;
@@ -42,5 +40,13 @@ public class Player {
 
     public String getPlayerRole() {
         return playerRole;
+    }
+
+    public void setPlayerRole(String playerRole) {
+        this.playerRole = playerRole;
+    }
+
+    public void setBankAccountId(String bankAccountId) {
+        this.bankAccountId = bankAccountId;
     }
 }

@@ -9,21 +9,20 @@ public class Transaction {
     private String type;
     private LocalDateTime creationTime;
     private BigDecimal amount;
-    private String senderLogin;
+    private String bankAccountId;
 
-    public Transaction(String id, String state, String type, BigDecimal amount,String senderLogin) {
+    public Transaction(String id, String state, String type, BigDecimal amount,String bankAccountId) {
         this.id = id;
         this.state = state;
         this.type = type;
         this.creationTime = LocalDateTime.now();
         this.amount = amount;
-        this.senderLogin = senderLogin;
+        this.bankAccountId = bankAccountId;
     }
 
     public static enum TransactionState {
         SUCCESSFUL,
         FAILURE,
-        PENDING
     }
 
     public static enum TransactionType {
@@ -51,7 +50,7 @@ public class Transaction {
         return amount;
     }
 
-    public String getSenderLogin() {
-        return senderLogin;
+    public String getBankAccountId() {
+        return bankAccountId;
     }
 }

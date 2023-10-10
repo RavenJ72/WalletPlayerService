@@ -2,8 +2,8 @@ package applicationServices.exceptions.player;
 
 import applicationServices.exceptions.BaseException;
 
-public class PlayerNotUniqEmailException extends BaseException {
-    public PlayerNotUniqEmailException(String message) {
+public class PlayerInvalidLoginException extends BaseException {
+    public PlayerInvalidLoginException(String message) {
         super(message);
     }
 }

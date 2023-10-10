@@ -2,8 +2,10 @@ package applicationServices.services;
 
 import applicationServices.exceptions.BaseException;
 import model.Player;
+import model.Transaction;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface PlayerServiceI {
 
@@ -11,9 +13,15 @@ public interface PlayerServiceI {
 
     Player findPlayerByLogin(String login) throws BaseException;
 
-    boolean withdrawMoney(String bankAccountId, BigDecimal amount) throws BaseException;
 
-    boolean depositMoney(String bankAccountId, BigDecimal amount) throws BaseException;
+    BigDecimal checkBalance(String bankAccountId) throws BaseException;
+
+    List<Transaction> getTransactionHistory(String bankAccountId) throws BaseException;
+
+    boolean withdrawMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException;
+
+    boolean depositMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException;
+
 
 
 

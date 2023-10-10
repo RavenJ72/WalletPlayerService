@@ -5,6 +5,7 @@ import model.Transaction;
 import modelRepositoriesI.PlayerRepositoryI;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerRepository implements PlayerRepositoryI {
@@ -19,5 +20,10 @@ public class PlayerRepository implements PlayerRepositoryI {
     @Override
     public Player getByLogin(String login) {
         return memory.get(login);
+    }
+
+    @Override
+    public List<Player> getAll() {
+        return memory.values().stream().toList();
     }
 }

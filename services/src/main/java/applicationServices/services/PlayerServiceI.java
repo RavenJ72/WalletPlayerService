@@ -18,6 +18,8 @@ public interface PlayerServiceI {
 
     List<Transaction> getTransactionHistory(String bankAccountId) throws BaseException;
 
+    List<Player> getAll();
+
     boolean withdrawMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException;
 
     boolean depositMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException;

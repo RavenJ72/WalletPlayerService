@@ -2,8 +2,10 @@ package consoleUI.modules;
 
 import applicationServices.exceptions.player.PlayerDontExistException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
+import applicationServices.services.PlayerLogServiceI;
 import applicationServices.services.PlayerServiceI;
 import consoleUI.input.ScannerFactory;
+import consoleUI.serviceFactories.PlayerLogServiceFactory;
 import consoleUI.serviceFactories.PlayerServiceFactory;
 import model.Player;
 
@@ -26,6 +28,7 @@ public class MainMenuUiModule {
 
     public void process(){
         String message = "";
+        System.out.println("Welcome to the Console App!");
         while (true){
             try{
                 displayMainMenu();
@@ -35,7 +38,6 @@ public class MainMenuUiModule {
                 } else {
                     switch (message) {
                         case "1":
-                            loginCreationReminder();
                             System.out.println("\nEnter login:");
                             String authLogin = scanner.nextLine();
                             try {
@@ -48,11 +50,8 @@ public class MainMenuUiModule {
                                 } while (authPassword.isEmpty());
                                 if(player.getPassword().equalsIgnoreCase(authPassword)){
                                     System.out.println("The password is correct, logging in.");
-                                    //
-                                    //
                                     new PlayerMenuModule().process(player);
-                                    //
-                                    //
+                                    break;
                                 }else{
                                     System.out.println("Wrong password!");
                                 }
@@ -61,6 +60,7 @@ public class MainMenuUiModule {
                             }
                             break;
                         case "2":
+                            loginCreationReminder();
                             String regLogin;
                             do {
                                 System.out.println(String.format("Enter uniq login"));
@@ -82,9 +82,6 @@ public class MainMenuUiModule {
                             break;
                         case "3":
                             System.out.println("Termination of the application process");
-                        default:
-                            System.out.println("Invalid input. Use one from above");
-                            break;
                     }
                     if (message.equalsIgnoreCase("3")){
                         break;
@@ -101,7 +98,7 @@ public class MainMenuUiModule {
     }
 
     public static void displayMainMenu() {
-        System.out.println("Welcome to the Console App!");
+
         System.out.println("Please choose an option:");
         System.out.println("1. Log in to your account");
         System.out.println("2. Register a new account");

@@ -30,7 +30,11 @@ public class BankAccount {
     }
 
     private String generateUniqueId() {
-        // Генерируем уникальный ID с использованием UUID (Universally Unique Identifier)
         return UUID.randomUUID().toString();
     }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
 }

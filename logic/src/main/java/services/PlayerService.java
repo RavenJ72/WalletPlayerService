@@ -30,8 +30,10 @@ public class PlayerService implements PlayerServiceI {
         if(playerRepository.getByLogin(player.getLogin()) == null){
             if(validateLogin(player.getLogin())){
                 BankAccount bankAccount = new BankAccount();
+                bankAccountService.save(bankAccount);
                 player.setBankAccountId(bankAccount.getId());
                 playerRepository.save(player);
+
             }else{
                 throw new PlayerInvalidLoginException("Incorrect login format");
             }
@@ -68,6 +70,11 @@ public class PlayerService implements PlayerServiceI {
     @Override
     public boolean depositMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException {
         return bankAccountService.depositMoney(bankAccountId,amount,transactionId);
+    }
+
+    @Override
+    public List<Player> getAll() {
+        return playerRepository.getAll();
     }
 
     private boolean validateLogin(String login) {

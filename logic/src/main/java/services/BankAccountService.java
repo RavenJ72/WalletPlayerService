@@ -2,10 +2,13 @@ package services;
 
 
 import applicationServices.exceptions.BaseException;
+import applicationServices.exceptions.bankAccount.BankAccountNotEnoughMoney;
 import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
+import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
 import applicationServices.services.BankAccountServiceI;
 import applicationServices.services.TransactionServiceI;
 import model.BankAccount;
+import model.Transaction;
 import modelRepositoriesI.BankAccountRepositoryI;
 
 import java.math.BigDecimal;
@@ -39,15 +42,54 @@ public class BankAccountService implements BankAccountServiceI {
         if(bankAccount == null){
             throw new BankAccountNotFoundException("Issued account dont exists");
         }
-        if(bankAccount.getBalance().intValue() - amount.intValue() >= 0){
 
+        Transaction transaction = new Transaction(Transaction.TransactionType.DEBIT.toString(),amount,bankAccountId);
+
+        if(transactionId != null){
+            transaction.setId(transactionId);
         }
-        return false;
+
+        if(bankAccount.getBalance().intValue() - amount.intValue() < 0){
+            throw new BankAccountNotEnoughMoney("There are not enough funds for withdrawal");
+        }
+        try {
+            transactionServiceI.save(transaction);
+        }catch (BaseException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        bankAccount.getPlayerTransactions().add(transaction);
+        bankAccount.setBalance(bankAccount.getBalance().subtract(amount));
+
+        return true;
     }
+
+
+
 
     @Override
     public boolean depositMoney(String bankAccountId, BigDecimal amount,String transactionId) throws BaseException {
-        return false;
+
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId);
+        if(bankAccount == null){
+            throw new BankAccountNotFoundException("Issued account dont exists");
+        }
+
+        Transaction transaction = new Transaction(Transaction.TransactionType.CREDIT.toString(),amount,bankAccountId);
+
+        if(transactionId != null){
+            transaction.setId(transactionId);
+        }
+
+        try {
+            transactionServiceI.save(transaction);
+        }catch (BaseException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        bankAccount.getPlayerTransactions().add(transaction);
+        bankAccount.setBalance(bankAccount.getBalance().add(amount));
+        return true;
     }
 
 

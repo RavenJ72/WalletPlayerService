@@ -1,7 +1,11 @@
 package services;
 
 import applicationServices.exceptions.BaseException;
+import applicationServices.exceptions.player.PlayerDontExistException;
+import applicationServices.exceptions.transaction.TransactionDontExistException;
+import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
 import applicationServices.services.TransactionServiceI;
+import model.Player;
 import model.Transaction;
 import modelRepositoriesI.TransactionRepositoryI;
 
@@ -17,16 +21,23 @@ public class TransactionService implements TransactionServiceI {
 
     @Override
     public Transaction save(Transaction transaction) throws BaseException {
-        return null;
+        if(transactionRepository.getById(transaction.getId()) != null) {
+            throw new TransactionNotUniqIDException("Not a unique transaction ID");
+        }
+        return transactionRepository.save(transaction);
     }
 
     @Override
     public List<Transaction> getAll() throws BaseException {
-        return null;
+        return transactionRepository.getAll();
     }
 
     @Override
     public Transaction getById(String id) throws BaseException {
-        return null;
+        Transaction transaction = transactionRepository.getById(id);
+        if(transaction == null){
+            throw new TransactionDontExistException("Transaction with id: " + id + " does not exist");
+        }
+        return transaction;
     }
 }

@@ -17,7 +17,7 @@ public class Player {
         this.password = password;
         this.bankAccountId = bankAccountId;
         this.creationTime = LocalDateTime.now();
-        this.playerRole = "user";
+        this.playerRole = "USER";
     }
 
     public String getLogin() {
@@ -49,4 +49,14 @@ public class Player {
     public void setBankAccountId(String bankAccountId) {
         this.bankAccountId = bankAccountId;
     }
+
+    @Override
+    public String toString() {
+        return "\nPlayer Information:" +
+                "\nLogin: " + login +
+                "\nCreation Time: " + creationTime +
+                "\nPlayer Role: " + playerRole +
+                "\nBank Account ID: " + bankAccountId + "\n";
+    }
+
 }

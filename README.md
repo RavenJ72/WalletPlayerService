@@ -44,10 +44,6 @@ App is build using maven. Simple type in root folder
 mvn install
 ```
 
-It will download npm to get angular and other web dependencies. Standard maven clean won't clean frontend dependencies so if you wont to clean them as well simply run clean with profile 'node_clean' like this
-```
-mvn clean -Pnode_clean
-```
 To run console app also just run generated jar, like
 ```
  java -jar in/target/in-1.0-SNAPSHOT-MAIN-jar-with-dependencies.jar

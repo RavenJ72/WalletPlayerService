@@ -56,6 +56,6 @@ public class PlayerLogServiceTest {
 
         assertThatThrownBy(() -> playerLogService.getByLogin(login))
                 .isInstanceOf(PlayerLogDontExistException.class)
-                .hasMessage("Log does not exist.");
+                .hasMessage("No log entries exist for the specified player.");
     }
 }

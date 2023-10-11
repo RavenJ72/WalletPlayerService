@@ -90,7 +90,7 @@ public class BankAccountServiceTest {
 
         assertThatThrownBy(() -> bankAccountService.findAccountById("testId"))
                 .isInstanceOf(BankAccountNotFoundException.class)
-                .hasMessage("Issued account dont exists");
+                .hasMessage("The requested account doesn't exist");
     }
 
     @Test

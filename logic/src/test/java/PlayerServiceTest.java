@@ -56,7 +56,7 @@ public class PlayerServiceTest {
 
         assertThatThrownBy(() -> playerService.createPlayer(player))
                 .isInstanceOf(PlayerInvalidLoginException.class)
-                .hasMessage("Incorrect login format");
+                .hasMessage("Invalid login format");
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PlayerServiceTest {
 
         assertThatThrownBy(() -> playerService.findPlayerByLogin("nonExistentPlayer"))
                 .isInstanceOf(PlayerDontExistException.class)
-                .hasMessage("Issued player dont exists");
+                .hasMessage("The specified player doesn't exist");
     }
 
     @Test

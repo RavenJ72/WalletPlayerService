@@ -6,13 +6,12 @@
 
     <groupId>org.ylabs</groupId>
     <artifactId>WalletPlayerService</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT-MAIN</version>
     <packaging>pom</packaging>
     <modules>
         <module>domain</module>
         <module>in</module>
         <module>logic</module>
-
         <module>repositories</module>
         <module>services</module>
     </modules>
@@ -43,5 +42,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

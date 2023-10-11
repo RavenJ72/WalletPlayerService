@@ -53,7 +53,7 @@ public class TransactionServiceTest {
         // Вызываем метод save из transactionService и ожидаем исключение TransactionNotUniqIDException
         assertThatThrownBy(() -> transactionService.save(transaction))
                 .isInstanceOf(TransactionNotUniqIDException.class)
-                .hasMessage("Not a unique transaction ID");
+                .hasMessage("A transaction with the same ID already exists");
     }
 
     @Test
@@ -98,6 +98,6 @@ public class TransactionServiceTest {
         // и ожидаем исключение TransactionDontExistException
         assertThatThrownBy(() -> transactionService.getById("nonExistentId"))
                 .isInstanceOf(TransactionDontExistException.class)
-                .hasMessage("Transaction with id: nonExistentId does not exist");
+                .hasMessage("Transaction with ID: nonExistentId does not exist");
     }
 }

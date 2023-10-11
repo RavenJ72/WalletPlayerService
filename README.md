@@ -31,11 +31,10 @@ This assignment aims to assess your ability to design and build a simple console
 It involves creating different layers, handling input and output, and providing user-friendly functionality for managing player accounts.  
 
 ### Note to Reviewers
-This project serves as a demonstration of the applicant's skills and understanding of software architecture and development. It is a simple but functional console application. 
-The codebase follows good practices in terms of layer separation, documentation, and testing. The README.MD provides clear instructions on how to run the application.  
-The applicant's ability to work with collections and create a user-friendly console interface is also showcased.
-In this project I tried to implement some simple app to log work time.
-I tried to make it not too complex so it's behaviour is not perfect but should be good example from architectural point.  
+It is a simple but functional console application. 
+When the system is launched, an 'admin' account is automatically created.  
+Login: ADMIN  
+Password: ADMIN  
 
 
 ## Building and running

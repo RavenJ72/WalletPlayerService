@@ -80,4 +80,6 @@ public interface PlayerServiceI {
      * @throws BaseException If an error occurs during the operation.
      */
     boolean depositMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException;
+
+
 }

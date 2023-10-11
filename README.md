@@ -46,5 +46,5 @@ mvn install
 
 To run console app also just run generated jar, like
 ```
- java -jar in/target/in-1.0-SNAPSHOT-MAIN-jar-with-dependencies.jar
+ java -jar in/target/in-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```

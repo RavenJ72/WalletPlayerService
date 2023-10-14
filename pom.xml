@@ -20,26 +20,38 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--dependencies-->
+        <version.assertj-core>3.24.2</version.assertj-core>
+        <version.junit>4.13.2</version.junit>
+        <version.mockito-core>5.6.0</version.mockito-core>
+
+        <!--plugins-->
+        <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version>
+            <version>${version.assertj-core}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.6.0</version>
+            <version>${version.mockito-core}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+
+
+
 </project>

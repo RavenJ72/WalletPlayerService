@@ -12,7 +12,7 @@
         <module>domain</module>
         <module>in</module>
         <module>logic</module>
-        <module>repository-interface</module>
+        <module>repositories</module>
         <module>services</module>
     </modules>
 
@@ -20,6 +20,45 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--dependencies-->
+        <version.assertj-core>3.24.2</version.assertj-core>
+        <version.junit>4.13.2</version.junit>
+        <version.mockito-core>5.6.0</version.mockito-core>
+        <version.junit-jupiter>5.9.2</version.junit-jupiter>
+
+        <!--plugins-->
+        <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${version.assertj-core}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${version.mockito-core}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${version.junit-jupiter}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+
 
 </project>

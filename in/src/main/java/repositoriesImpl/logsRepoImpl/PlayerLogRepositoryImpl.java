@@ -1,7 +1,7 @@
 package repositoriesImpl.logsRepoImpl;
 
 import model.PlayerLog;
-import modelRepositoriesI.PlayerLogRepositoryI;
+import modelRepositoriesI.PlayerLogRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.Map;
  * This class provides methods for saving and retrieving PlayerLog objects, as well as querying logs by login.
  * @author Gleb Nickolaenko
  */
-public class PlayerLogRepository implements PlayerLogRepositoryI {
+public class PlayerLogRepositoryImpl implements PlayerLogRepository {
     private final Map<String, List<PlayerLog>> memory = new HashMap<>();
 
     /**

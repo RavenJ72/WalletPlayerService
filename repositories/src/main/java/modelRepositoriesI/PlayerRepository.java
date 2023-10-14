@@ -2,7 +2,6 @@ package modelRepositoriesI;
 
 import model.Player;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public interface PlayerRepositoryI {
+public interface PlayerRepository {
     /**
      * Saves a player entity in the repository.
      *

@@ -2,9 +2,9 @@ package services;
 
 import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.playerLog.PlayerLogDontExistException;
-import applicationServices.services.PlayerLogServiceI;
+import applicationServices.services.PlayerLogService;
 import model.PlayerLog;
-import modelRepositoriesI.PlayerLogRepositoryI;
+import modelRepositoriesI.PlayerLogRepository;
 
 import java.util.List;
 
@@ -15,15 +15,15 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public class PlayerLogService implements PlayerLogServiceI {
-    private final PlayerLogRepositoryI playerLogRepository;
+public class PlayerLogServiceImpl implements PlayerLogService {
+    private final PlayerLogRepository playerLogRepository;
 
     /**
      * Constructs a new PlayerLogService with the specified repository.
      *
      * @param playerLogRepository The repository for managing player log entries.
      */
-    public PlayerLogService(PlayerLogRepositoryI playerLogRepository) {
+    public PlayerLogServiceImpl(PlayerLogRepository playerLogRepository) {
         this.playerLogRepository = playerLogRepository;
     }
 

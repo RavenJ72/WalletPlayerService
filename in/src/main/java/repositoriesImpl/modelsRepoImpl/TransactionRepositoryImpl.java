@@ -1,7 +1,7 @@
 package repositoriesImpl.modelsRepoImpl;
 
 import model.Transaction;
-import modelRepositoriesI.TransactionRepositoryI;
+import modelRepositoriesI.TransactionRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.Map;
  * This class provides methods for storing, retrieving, and managing Transaction objects.
  * @author Gleb Nickolaenko
  */
-public class TransactionRepository implements TransactionRepositoryI {
+public class TransactionRepositoryImpl implements TransactionRepository {
 
     private final Map<String, Transaction> memory = new HashMap<>();
 

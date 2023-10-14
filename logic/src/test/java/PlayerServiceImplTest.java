@@ -6,30 +6,29 @@ import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
 import applicationServices.exceptions.player.PlayerDontExistException;
 import applicationServices.exceptions.player.PlayerInvalidLoginException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
-import applicationServices.exceptions.transaction.TransactionDontExistException;
-import applicationServices.services.BankAccountServiceI;
+import applicationServices.services.BankAccountService;
 import model.BankAccount;
 import model.Player;
 import model.Transaction;
-import modelRepositoriesI.PlayerRepositoryI;
+import modelRepositoriesI.PlayerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.PlayerService;
+import services.PlayerServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerServiceTest {
-    private PlayerService playerService;
-    private PlayerRepositoryI playerRepository;
-    private BankAccountServiceI bankAccountService;
+public class PlayerServiceImplTest {
+    private PlayerServiceImpl playerServiceImpl;
+    private PlayerRepository playerRepository;
+    private BankAccountService bankAccountService;
 
     @BeforeEach
     public void setUp() {
-        playerRepository = mock(PlayerRepositoryI.class);
-        bankAccountService = mock(BankAccountServiceI.class);
-        playerService = new PlayerService(playerRepository, bankAccountService);
+        playerRepository = mock(PlayerRepository.class);
+        bankAccountService = mock(BankAccountService.class);
+        playerServiceImpl = new PlayerServiceImpl(playerRepository, bankAccountService);
     }
 
     @Test
@@ -44,7 +43,7 @@ public class PlayerServiceTest {
         });
         when(playerRepository.save(player)).thenReturn(player);
 
-        Player createdPlayer = playerService.createPlayer(player);
+        Player createdPlayer = playerServiceImpl.createPlayer(player);
 
         assertThat(createdPlayer).isEqualTo(player);
         assertThat(createdPlayer.getBankAccountId()).isEqualTo("testAccountId");
@@ -54,7 +53,7 @@ public class PlayerServiceTest {
     public void testCreatePlayerInvalidLoginException() {
         Player player = new Player("invalid login with spaces", "testPassword", null);
 
-        assertThatThrownBy(() -> playerService.createPlayer(player))
+        assertThatThrownBy(() -> playerServiceImpl.createPlayer(player))
                 .isInstanceOf(PlayerInvalidLoginException.class)
                 .hasMessage("Invalid login format");
     }
@@ -66,7 +65,7 @@ public class PlayerServiceTest {
 
         when(playerRepository.getByLogin("existingPlayer")).thenReturn(existingPlayer);
 
-        assertThatThrownBy(() -> playerService.createPlayer(newPlayer))
+        assertThatThrownBy(() -> playerServiceImpl.createPlayer(newPlayer))
                 .isInstanceOf(PlayerNotUniqLoginException.class)
                 .hasMessage("A user with this username already exists.");
     }
@@ -77,7 +76,7 @@ public class PlayerServiceTest {
 
         when(playerRepository.getByLogin("testLogin")).thenReturn(player);
 
-        Player foundPlayer = playerService.findPlayerByLogin("testLogin");
+        Player foundPlayer = playerServiceImpl.findPlayerByLogin("testLogin");
 
         assertThat(foundPlayer).isEqualTo(player);
     }
@@ -86,7 +85,7 @@ public class PlayerServiceTest {
     public void testFindPlayerByLoginDontExistException() {
         when(playerRepository.getByLogin("nonExistentPlayer")).thenReturn(null);
 
-        assertThatThrownBy(() -> playerService.findPlayerByLogin("nonExistentPlayer"))
+        assertThatThrownBy(() -> playerServiceImpl.findPlayerByLogin("nonExistentPlayer"))
                 .isInstanceOf(PlayerDontExistException.class)
                 .hasMessage("The specified player doesn't exist");
     }
@@ -99,7 +98,7 @@ public class PlayerServiceTest {
 
         when(bankAccountService.findAccountById(bankAccountId)).thenReturn(bankAccount);
 
-        BigDecimal balance = playerService.checkBalance(bankAccountId);
+        BigDecimal balance = playerServiceImpl.checkBalance(bankAccountId);
 
         assertThat(balance).isEqualByComparingTo(BigDecimal.valueOf(100));
     }
@@ -124,7 +123,7 @@ public class PlayerServiceTest {
 
         when(bankAccountService.findAccountById(bankAccountId)).thenReturn(bankAccount);
 
-        List<Transaction> history = playerService.getTransactionHistory(bankAccountId);
+        List<Transaction> history = playerServiceImpl.getTransactionHistory(bankAccountId);
 
         assertThat(history).isEqualTo(transactions);
     }
@@ -135,7 +134,7 @@ public class PlayerServiceTest {
 
         when(bankAccountService.findAccountById(bankAccountId)).thenThrow(new BankAccountNotFoundException("Account not found."));
 
-        assertThatThrownBy(() -> playerService.getTransactionHistory(bankAccountId))
+        assertThatThrownBy(() -> playerServiceImpl.getTransactionHistory(bankAccountId))
                 .isInstanceOf(BankAccountNotFoundException.class)
                 .hasMessage("Account not found.");
     }

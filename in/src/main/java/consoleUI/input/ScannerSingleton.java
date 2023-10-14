@@ -8,9 +8,15 @@ import java.util.Scanner;
  * This class ensures that only one instance of a Scanner is created, promoting resource efficiency and preventing
  * multiple Scanners from competing for console input.
  *
+ * Usage:
+ * To obtain the single instance of the Scanner for console input, use the getScanner() method.
+ *
+ * Example:
+ * Scanner consoleScanner = ScannerSingleton.getScanner();
+ *
  * @author Gleb Nickolaenko
  */
-public class ScannerFactory {
+public class ScannerSingleton {
     private static Scanner scannerInstance;
 
     /**

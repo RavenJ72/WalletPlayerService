@@ -1,16 +1,15 @@
 package services;
 
 import applicationServices.exceptions.BaseException;
-import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
 import applicationServices.exceptions.player.PlayerDontExistException;
 import applicationServices.exceptions.player.PlayerInvalidLoginException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
-import applicationServices.services.BankAccountServiceI;
-import applicationServices.services.PlayerServiceI;
+import applicationServices.services.BankAccountService;
+import applicationServices.services.PlayerService;
 import model.BankAccount;
 import model.Player;
 import model.Transaction;
-import modelRepositoriesI.PlayerRepositoryI;
+import modelRepositoriesI.PlayerRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,10 +22,10 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public class PlayerService implements PlayerServiceI {
+public class PlayerServiceImpl implements PlayerService {
 
-    private final PlayerRepositoryI playerRepository;
-    private final BankAccountServiceI bankAccountService;
+    private final PlayerRepository playerRepository;
+    private final BankAccountService bankAccountService;
 
     /**
      * Constructs a new PlayerService with the specified repositories and services.
@@ -34,7 +33,7 @@ public class PlayerService implements PlayerServiceI {
      * @param playerRepository The repository for managing player accounts.
      * @param bankAccountService The service for managing bank accounts.
      */
-    public PlayerService(PlayerRepositoryI playerRepository, BankAccountServiceI bankAccountService) {
+    public PlayerServiceImpl(PlayerRepository playerRepository, BankAccountService bankAccountService) {
         this.playerRepository = playerRepository;
         this.bankAccountService = bankAccountService;
     }

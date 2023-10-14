@@ -1,7 +1,7 @@
 package repositoriesImpl.modelsRepoImpl;
 
 import model.BankAccount;
-import modelRepositoriesI.BankAccountRepositoryI;
+import modelRepositoriesI.BankAccountRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  * This class provides methods for storing and retrieving BankAccount objects.
  * @author Gleb Nickolaenko
  */
-public class BankAccountRepository implements BankAccountRepositoryI {
+public class BankAccountRepositoryImpl implements BankAccountRepository {
 
     private final Map<String, BankAccount> memory = new HashMap<>();
 

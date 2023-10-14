@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public interface PlayerServiceI {
+public interface PlayerService {
     /**
      * Creates a new player entity.
      *

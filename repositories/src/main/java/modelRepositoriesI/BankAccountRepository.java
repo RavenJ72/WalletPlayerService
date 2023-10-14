@@ -9,7 +9,7 @@ import model.BankAccount;
  *
  * @author Gleb Nickolaenko
  */
-public interface BankAccountRepositoryI {
+public interface BankAccountRepository {
     /**
      * Saves a bank account in the repository.
      *

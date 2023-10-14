@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public interface TransactionServiceI {
+public interface TransactionService {
     /**
      * Saves a financial transaction in the repository.
      *

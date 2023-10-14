@@ -5,24 +5,24 @@ import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.transaction.TransactionDontExistException;
 import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
 import model.Transaction;
-import modelRepositoriesI.TransactionRepositoryI;
+import modelRepositoriesI.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.TransactionService;
+import services.TransactionServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionServiceTest {
-    private TransactionService transactionService;
-    private TransactionRepositoryI transactionRepository;
+public class TransactionServiceImplTest {
+    private TransactionServiceImpl transactionServiceImpl;
+    private TransactionRepository transactionRepository;
 
     @BeforeEach
     public void setUp() {
         // Создаем мок-объект TransactionRepositoryI
-        transactionRepository = mock(TransactionRepositoryI.class);
-        transactionService = new TransactionService(transactionRepository);
+        transactionRepository = mock(TransactionRepository.class);
+        transactionServiceImpl = new TransactionServiceImpl(transactionRepository);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class TransactionServiceTest {
         when(transactionRepository.save(transaction)).thenReturn(transaction);
 
         // Вызываем метод save из transactionService
-        Transaction savedTransaction = transactionService.save(transaction);
+        Transaction savedTransaction = transactionServiceImpl.save(transaction);
 
         // Проверяем, что результат сохранения равен ожидаемому объекту
         assertThat(savedTransaction).isEqualTo(transaction);
@@ -51,7 +51,7 @@ public class TransactionServiceTest {
         when(transactionRepository.getById("testId")).thenReturn(transaction);
 
         // Вызываем метод save из transactionService и ожидаем исключение TransactionNotUniqIDException
-        assertThatThrownBy(() -> transactionService.save(transaction))
+        assertThatThrownBy(() -> transactionServiceImpl.save(transaction))
                 .isInstanceOf(TransactionNotUniqIDException.class)
                 .hasMessage("A transaction with the same ID already exists");
     }
@@ -67,7 +67,7 @@ public class TransactionServiceTest {
         when(transactionRepository.getAll()).thenReturn(transactionList);
 
         // Вызываем метод getAll из transactionService
-        List<Transaction> retrievedTransactions = transactionService.getAll();
+        List<Transaction> retrievedTransactions = transactionServiceImpl.getAll();
 
         // Проверяем, что результат запроса равен ожидаемому списку
         assertThat(retrievedTransactions).isEqualTo(transactionList);
@@ -83,7 +83,7 @@ public class TransactionServiceTest {
         when(transactionRepository.getById("testId")).thenReturn(transaction);
 
         // Вызываем метод getById из transactionService
-        Transaction retrievedTransaction = transactionService.getById("testId");
+        Transaction retrievedTransaction = transactionServiceImpl.getById("testId");
 
         // Проверяем, что результат запроса равен ожидаемому объекту
         assertThat(retrievedTransaction).isEqualTo(transaction);
@@ -96,7 +96,7 @@ public class TransactionServiceTest {
 
         // Вызываем метод getById из transactionService с несуществующим ID
         // и ожидаем исключение TransactionDontExistException
-        assertThatThrownBy(() -> transactionService.getById("nonExistentId"))
+        assertThatThrownBy(() -> transactionServiceImpl.getById("nonExistentId"))
                 .isInstanceOf(TransactionDontExistException.class)
                 .hasMessage("Transaction with ID: nonExistentId does not exist");
     }

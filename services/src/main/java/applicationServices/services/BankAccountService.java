@@ -4,7 +4,6 @@ import applicationServices.exceptions.BaseException;
 import model.BankAccount;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * An interface representing a service for managing bank accounts.
@@ -14,7 +13,7 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public interface BankAccountServiceI {
+public interface BankAccountService {
     /**
      * Saves a bank account in the repository.
      *

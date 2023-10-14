@@ -4,23 +4,22 @@ import static org.mockito.Mockito.*;
 import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.playerLog.PlayerLogDontExistException;
 import model.PlayerLog;
-import modelRepositoriesI.PlayerLogRepositoryI;
+import modelRepositoriesI.PlayerLogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.PlayerLogService;
+import services.PlayerLogServiceImpl;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerLogServiceTest {
-    private PlayerLogService playerLogService;
-    private PlayerLogRepositoryI playerLogRepository;
+public class PlayerLogServiceImplTest {
+    private PlayerLogServiceImpl playerLogServiceImpl;
+    private PlayerLogRepository playerLogRepository;
 
     @BeforeEach
     public void setUp() {
-        playerLogRepository = mock(PlayerLogRepositoryI.class);
-        playerLogService = new PlayerLogService(playerLogRepository);
+        playerLogRepository = mock(PlayerLogRepository.class);
+        playerLogServiceImpl = new PlayerLogServiceImpl(playerLogRepository);
     }
 
     @Test
@@ -29,7 +28,7 @@ public class PlayerLogServiceTest {
 
         when(playerLogRepository.save(playerLog)).thenReturn(playerLog);
 
-        PlayerLog savedLog = playerLogService.save(playerLog);
+        PlayerLog savedLog = playerLogServiceImpl.save(playerLog);
 
         assertThat(savedLog).isEqualTo(playerLog);
     }
@@ -43,7 +42,7 @@ public class PlayerLogServiceTest {
 
         when(playerLogRepository.getByPlayerLogsByLogin(login)).thenReturn(playerLogs);
 
-        List<PlayerLog> retrievedLogs = playerLogService.getByLogin(login);
+        List<PlayerLog> retrievedLogs = playerLogServiceImpl.getByLogin(login);
 
         assertThat(retrievedLogs).isEqualTo(playerLogs);
     }
@@ -54,7 +53,7 @@ public class PlayerLogServiceTest {
 
         when(playerLogRepository.getByPlayerLogsByLogin(login)).thenReturn(null);
 
-        assertThatThrownBy(() -> playerLogService.getByLogin(login))
+        assertThatThrownBy(() -> playerLogServiceImpl.getByLogin(login))
                 .isInstanceOf(PlayerLogDontExistException.class)
                 .hasMessage("No log entries exist for the specified player.");
     }

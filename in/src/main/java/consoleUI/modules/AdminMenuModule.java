@@ -1,15 +1,15 @@
 package consoleUI.modules;
 
 import applicationServices.exceptions.BaseException;
-import applicationServices.services.BankAccountServiceI;
-import applicationServices.services.PlayerLogServiceI;
-import applicationServices.services.PlayerServiceI;
-import applicationServices.services.TransactionServiceI;
-import consoleUI.input.ScannerFactory;
-import serviceFactories.BankAccountServiceFactory;
-import serviceFactories.PlayerLogServiceFactory;
-import serviceFactories.PlayerServiceFactory;
-import serviceFactories.TransactionServiceFactory;
+import applicationServices.services.BankAccountService;
+import applicationServices.services.PlayerLogService;
+import applicationServices.services.PlayerService;
+import applicationServices.services.TransactionService;
+import consoleUI.input.ScannerSingleton;
+import serviceFactories.BankAccountServiceSingleton;
+import serviceFactories.PlayerLogServiceSingleton;
+import serviceFactories.PlayerServiceSingleton;
+import serviceFactories.TransactionServiceSingleton;
 import model.Player;
 import model.PlayerLog;
 
@@ -22,21 +22,21 @@ import java.util.Scanner;
  */
 public class AdminMenuModule {
 
-    private final TransactionServiceI transactionService;
-    private final BankAccountServiceI bankAccountService;
-    private final PlayerServiceI playerService;
-    private final PlayerLogServiceI playerLogService;
+    private final TransactionService transactionService;
+    private final BankAccountService bankAccountService;
+    private final PlayerService playerService;
+    private final PlayerLogService playerLogService;
     private final Scanner scanner;
 
     /**
      * Initializes a new instance of the AdminMenuModule class.
      */
     public AdminMenuModule() {
-        this.transactionService = TransactionServiceFactory.getTransactionService();
-        this.bankAccountService = BankAccountServiceFactory.getBankAccountService();
-        this.playerService = PlayerServiceFactory.getPlayerService();
-        this.scanner = ScannerFactory.getScanner();
-        this.playerLogService = PlayerLogServiceFactory.getPlayerLogService();
+        this.transactionService = TransactionServiceSingleton.getTransactionService();
+        this.bankAccountService = BankAccountServiceSingleton.getBankAccountService();
+        this.playerService = PlayerServiceSingleton.getPlayerService();
+        this.scanner = ScannerSingleton.getScanner();
+        this.playerLogService = PlayerLogServiceSingleton.getPlayerLogService();
     }
 
     /**

@@ -3,9 +3,9 @@ package services;
 import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.transaction.TransactionDontExistException;
 import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
-import applicationServices.services.TransactionServiceI;
+import applicationServices.services.TransactionService;
 import model.Transaction;
-import modelRepositoriesI.TransactionRepositoryI;
+import modelRepositoriesI.TransactionRepository;
 
 import java.util.List;
 
@@ -16,16 +16,16 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public class TransactionService implements TransactionServiceI {
+public class TransactionServiceImpl implements TransactionService {
 
-    private final TransactionRepositoryI transactionRepository;
+    private final TransactionRepository transactionRepository;
 
     /**
      * Constructs a new TransactionService with the specified transaction repository.
      *
      * @param transactionRepository The repository for managing financial transactions.
      */
-    public TransactionService(TransactionRepositoryI transactionRepository) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
 

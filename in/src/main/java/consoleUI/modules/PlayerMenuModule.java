@@ -2,13 +2,13 @@ package consoleUI.modules;
 
 import applicationServices.exceptions.BaseException;
 import applicationServices.services.*;
-import consoleUI.input.ScannerFactory;
+import consoleUI.input.ScannerSingleton;
 import model.Player;
 import model.PlayerLog;
-import serviceFactories.BankAccountServiceFactory;
-import serviceFactories.PlayerLogServiceFactory;
-import serviceFactories.PlayerServiceFactory;
-import serviceFactories.TransactionServiceFactory;
+import serviceFactories.BankAccountServiceSingleton;
+import serviceFactories.PlayerLogServiceSingleton;
+import serviceFactories.PlayerServiceSingleton;
+import serviceFactories.TransactionServiceSingleton;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -21,21 +21,21 @@ import java.util.Scanner;
  */
 public class PlayerMenuModule {
 
-    private final TransactionServiceI transactionService;
-    private final BankAccountServiceI bankAccountService;
-    private final PlayerServiceI playerService;
-    private final PlayerLogServiceI playerLogService;
+    private final TransactionService transactionService;
+    private final BankAccountService bankAccountService;
+    private final PlayerService playerService;
+    private final PlayerLogService playerLogService;
     private final Scanner scanner;
 
     /**
      * Constructs a new PlayerMenuModule.
      */
     public PlayerMenuModule() {
-        this.transactionService = TransactionServiceFactory.getTransactionService();
-        this.bankAccountService = BankAccountServiceFactory.getBankAccountService();
-        this.playerService = PlayerServiceFactory.getPlayerService();
-        this.playerLogService = PlayerLogServiceFactory.getPlayerLogService();
-        this.scanner = ScannerFactory.getScanner();
+        this.transactionService = TransactionServiceSingleton.getTransactionService();
+        this.bankAccountService = BankAccountServiceSingleton.getBankAccountService();
+        this.playerService = PlayerServiceSingleton.getPlayerService();
+        this.playerLogService = PlayerLogServiceSingleton.getPlayerLogService();
+        this.scanner = ScannerSingleton.getScanner();
     }
 
     /**

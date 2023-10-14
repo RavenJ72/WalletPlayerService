@@ -2,7 +2,6 @@ package modelRepositoriesI;
 
 import model.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public interface TransactionRepositoryI {
+public interface TransactionRepository {
     /**
      * Saves a financial transaction in the repository.
      *

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Gleb Nickolaenko
  */
-public interface PlayerLogRepositoryI {
+public interface PlayerLogRepository {
      /**
       * Saves a player log entry in the repository.
       *

@@ -1,7 +1,7 @@
 package repositoriesImpl.modelsRepoImpl;
 
 import model.Player;
-import modelRepositoriesI.PlayerRepositoryI;
+import modelRepositoriesI.PlayerRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Map;
  * This class provides methods for storing, retrieving, and managing Player objects.
  * @author Gleb Nickolaenko
  */
-public class PlayerRepository implements PlayerRepositoryI {
+public class PlayerRepositoryImpl implements PlayerRepository {
 
     private final Map<String, Player> memory = new HashMap<>();
 

@@ -1,28 +1,37 @@
 package repositoriesImpl.repoFactories;
 
 import model.Player;
-import modelRepositoriesI.PlayerRepositoryI;
-import repositoriesImpl.modelsRepoImpl.PlayerRepository;
+import modelRepositoriesI.PlayerRepository;
+import repositoriesImpl.modelsRepoImpl.PlayerRepositoryImpl;
 
 /**
- * A factory class responsible for providing a single instance of the PlayerRepository.
+ * A singleton class responsible for providing a single instance of the PlayerRepository.
  *
  * This class ensures that only one instance of the PlayerRepository is created and reused for efficiency.
  * It provides access to the repository for player-related operations.
+ *
+ * Usage:
+ * To obtain the single instance of the PlayerRepository, use the getPlayerRepository() method.
+ *
+ * Example:
+ * PlayerRepositoryI playerRepository = PlayerRepositorySingleton.getPlayerRepository();
+ *
+ * If the repository is created for the first time, it initializes with an admin user.
+ *
  * @author Gleb Nickolaenko
  */
-public final class PlayerRepositoryFactory {
+public final class PlayerRepositorySingleton {
 
-    private static PlayerRepositoryI playerRepositoryInstance;
+    private static PlayerRepository playerRepositoryInstance;
 
     /**
      * Retrieves the single instance of the PlayerRepository. If the instance does not exist, it is created and initialized.
      *
      * @return The single instance of the PlayerRepository.
      */
-    public static PlayerRepositoryI getPlayerRepository() {
+    public static PlayerRepository getPlayerRepository() {
         if (playerRepositoryInstance == null) {
-            playerRepositoryInstance = new PlayerRepository();
+            playerRepositoryInstance = new PlayerRepositoryImpl();
 
             // Initialize with an admin user if the repository is created for the first time
             Player player = new Player("admin", "admin", null);

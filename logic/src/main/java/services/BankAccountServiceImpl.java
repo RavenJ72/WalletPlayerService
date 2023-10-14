@@ -3,12 +3,11 @@ package services;
 import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.bankAccount.BankAccountNotEnoughMoney;
 import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
-import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
-import applicationServices.services.BankAccountServiceI;
-import applicationServices.services.TransactionServiceI;
+import applicationServices.services.BankAccountService;
+import applicationServices.services.TransactionService;
 import model.BankAccount;
 import model.Transaction;
-import modelRepositoriesI.BankAccountRepositoryI;
+import modelRepositoriesI.BankAccountRepository;
 
 import java.math.BigDecimal;
 
@@ -20,19 +19,19 @@ import java.math.BigDecimal;
  *
  * @author Gleb Nickolaenko
  */
-public class BankAccountService implements BankAccountServiceI {
-    private final BankAccountRepositoryI bankAccountRepository;
-    private final TransactionServiceI transactionServiceI;
+public class BankAccountServiceImpl implements BankAccountService {
+    private final BankAccountRepository bankAccountRepository;
+    private final TransactionService transactionService;
 
     /**
      * Constructs a new BankAccountService with the specified repositories and services.
      *
      * @param bankAccountRepository The repository for managing bank accounts.
-     * @param transactionServiceI The service for managing financial transactions.
+     * @param transactionService The service for managing financial transactions.
      */
-    public BankAccountService(BankAccountRepositoryI bankAccountRepository, TransactionServiceI transactionServiceI) {
+    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository, TransactionService transactionService) {
         this.bankAccountRepository = bankAccountRepository;
-        this.transactionServiceI = transactionServiceI;
+        this.transactionService = transactionService;
     }
 
     /**
@@ -88,7 +87,7 @@ public class BankAccountService implements BankAccountServiceI {
             throw new BankAccountNotEnoughMoney("There are not enough funds for withdrawal");
         }
         try {
-            transactionServiceI.save(transaction);
+            transactionService.save(transaction);
         } catch (BaseException e){
             System.out.println(e.getMessage());
             return false;
@@ -122,7 +121,7 @@ public class BankAccountService implements BankAccountServiceI {
         }
 
         try {
-            transactionServiceI.save(transaction);
+            transactionService.save(transaction);
         } catch (BaseException e){
             System.out.println(e.getMessage());
             return false;

@@ -2,9 +2,9 @@ package consoleUI.modules;
 
 import applicationServices.exceptions.player.PlayerDontExistException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
-import applicationServices.services.PlayerServiceI;
-import consoleUI.input.ScannerFactory;
-import serviceFactories.PlayerServiceFactory;
+import applicationServices.services.PlayerService;
+import consoleUI.input.ScannerSingleton;
+import serviceFactories.PlayerServiceSingleton;
 import model.Player;
 
 import java.util.Scanner;
@@ -16,15 +16,15 @@ import java.util.Scanner;
  */
 public class MainMenuUiModule {
 
-    private final PlayerServiceI playerService;
+    private final PlayerService playerService;
     private final Scanner scanner;
 
     /**
      * Initializes a new instance of the MainMenuUiModule class.
      */
     public MainMenuUiModule() {
-        this.playerService = PlayerServiceFactory.getPlayerService();
-        this.scanner = ScannerFactory.getScanner();
+        this.playerService = PlayerServiceSingleton.getPlayerService();
+        this.scanner = ScannerSingleton.getScanner();
     }
 
     /**

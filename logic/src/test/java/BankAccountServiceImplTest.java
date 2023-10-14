@@ -4,27 +4,26 @@ import static org.mockito.Mockito.*;
 import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.bankAccount.BankAccountNotEnoughMoney;
 import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
-import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
-import applicationServices.services.TransactionServiceI;
+import applicationServices.services.TransactionService;
 import model.BankAccount;
 import model.Transaction;
-import modelRepositoriesI.BankAccountRepositoryI;
+import modelRepositoriesI.BankAccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.BankAccountService;
+import services.BankAccountServiceImpl;
 
 import java.math.BigDecimal;
 
-public class BankAccountServiceTest {
-    private BankAccountService bankAccountService;
-    private BankAccountRepositoryI bankAccountRepository;
-    private TransactionServiceI transactionService;
+public class BankAccountServiceImplTest {
+    private BankAccountServiceImpl bankAccountServiceImpl;
+    private BankAccountRepository bankAccountRepository;
+    private TransactionService transactionService;
 
     @BeforeEach
     public void setUp() {
-        bankAccountRepository = mock(BankAccountRepositoryI.class);
-        transactionService = mock(TransactionServiceI.class);
-        bankAccountService = new BankAccountService(bankAccountRepository, transactionService);
+        bankAccountRepository = mock(BankAccountRepository.class);
+        transactionService = mock(TransactionService.class);
+        bankAccountServiceImpl = new BankAccountServiceImpl(bankAccountRepository, transactionService);
     }
 
     @Test
@@ -44,7 +43,7 @@ public class BankAccountServiceTest {
         when(transactionService.save(transaction)).thenReturn(transaction);
 
         // Вызываем метод withdrawMoney из bankAccountService
-        boolean result = bankAccountService.withdrawMoney("testId", BigDecimal.valueOf(50), "testId");
+        boolean result = bankAccountServiceImpl.withdrawMoney("testId", BigDecimal.valueOf(50), "testId");
 
         // Проверяем, что операция выполнена успешно
         assertThat(result).isTrue();
@@ -64,7 +63,7 @@ public class BankAccountServiceTest {
         when(bankAccountRepository.findById("testId")).thenReturn(bankAccount);
         when(transactionService.save(transaction)).thenReturn(transaction);
 
-        boolean result = bankAccountService.depositMoney("testId", BigDecimal.valueOf(50), null);
+        boolean result = bankAccountServiceImpl.depositMoney("testId", BigDecimal.valueOf(50), null);
 
         assertThat(result).isTrue();
         assertThat(bankAccount.getBalance()).isEqualTo(BigDecimal.valueOf(150));
@@ -79,7 +78,7 @@ public class BankAccountServiceTest {
 
         when(bankAccountRepository.findById("testId")).thenReturn(bankAccount);
 
-        BankAccount foundAccount = bankAccountService.findAccountById("testId");
+        BankAccount foundAccount = bankAccountServiceImpl.findAccountById("testId");
 
         assertThat(foundAccount).isEqualTo(bankAccount);
     }
@@ -88,7 +87,7 @@ public class BankAccountServiceTest {
     public void testFindAccountByIdNotFoundException() throws BaseException {
         when(bankAccountRepository.findById("testId")).thenReturn(null);
 
-        assertThatThrownBy(() -> bankAccountService.findAccountById("testId"))
+        assertThatThrownBy(() -> bankAccountServiceImpl.findAccountById("testId"))
                 .isInstanceOf(BankAccountNotFoundException.class)
                 .hasMessage("The requested account doesn't exist");
     }
@@ -99,7 +98,7 @@ public class BankAccountServiceTest {
 
         when(bankAccountRepository.save(bankAccount)).thenReturn(bankAccount);
 
-        BankAccount savedAccount = bankAccountService.save(bankAccount);
+        BankAccount savedAccount = bankAccountServiceImpl.save(bankAccount);
 
         assertThat(savedAccount).isEqualTo(bankAccount);
     }
@@ -114,7 +113,7 @@ public class BankAccountServiceTest {
         // Попытка снять больше денег, чем есть на счете
         BigDecimal withdrawalAmount = BigDecimal.valueOf(150);
 
-        assertThatThrownBy(() -> bankAccountService.withdrawMoney("testId", withdrawalAmount, null))
+        assertThatThrownBy(() -> bankAccountServiceImpl.withdrawMoney("testId", withdrawalAmount, null))
                 .isInstanceOf(BankAccountNotEnoughMoney.class)
                 .hasMessage("There are not enough funds for withdrawal");
     }

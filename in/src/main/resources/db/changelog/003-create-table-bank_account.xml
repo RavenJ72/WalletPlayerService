@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
+
+    <changeSet id="2-bank_account-sequence" author="Gleb">
+        <createSequence sequenceName="bank_account_id_seq" schemaName="wallet"/>
+    </changeSet>
+
+    <changeSet id="3" author="Gleb">
+        <!-- Создание последовательности для таблицы BankAccount -->
+        <createSequence sequenceName="bank_account_id_seq" startValue="1" incrementBy="1" schemaName="wallet"/>
+
+        <!-- Создание таблицы BankAccount -->
+        <createTable tableName="bank_account" schemaName="wallet">
+            <column name="id" type="BIGINT" defaultValue="nextval('wallet.bank_account_id_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="balance" type="DECIMAL(20,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

@@ -1,7 +1,7 @@
-package serviceFactories;
+package serviceSingleton;
 
 import applicationServices.services.PlayerLogService;
-import repositoriesImpl.repoFactories.PlayerLogRepositorySingleton;
+import repoSingleton.PlayerLogRepositorySingleton;
 import services.PlayerLogServiceImpl;
 
 /**

@@ -1,7 +1,7 @@
-package serviceFactories;
+package serviceSingleton;
 
 import applicationServices.services.TransactionService;
-import repositoriesImpl.repoFactories.TransactionRepoSingleton;
+import repoSingleton.TransactionRepoSingleton;
 import services.TransactionServiceImpl;
 
 /**

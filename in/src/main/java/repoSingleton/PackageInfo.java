@@ -11,4 +11,4 @@
  * - The factory classes create the repositories only when needed and ensure that the same instance is reused throughout the application.
  * - This promotes efficient memory usage and data consistency when interacting with the underlying data storage.
  */
-package repositoriesImpl.repoFactories;
+package repoSingleton;

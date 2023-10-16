@@ -1,7 +1,7 @@
-package serviceFactories;
+package serviceSingleton;
 
 import applicationServices.services.PlayerService;
-import repositoriesImpl.repoFactories.PlayerRepositorySingleton;
+import repoSingleton.PlayerRepositorySingleton;
 import services.PlayerServiceImpl;
 
 /**

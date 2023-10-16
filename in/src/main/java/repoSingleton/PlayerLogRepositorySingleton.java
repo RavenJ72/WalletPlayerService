@@ -1,7 +1,7 @@
-package repositoriesImpl.repoFactories;
+package repoSingleton;
 
 import modelRepositoriesI.PlayerLogRepository;
-import repositoriesImpl.logsRepoImpl.PlayerLogRepositoryImpl;
+import inMemoryRepositories.logsRepoImpl.PlayerLogRepositoryImpl;
 
 /**
  * A singleton class responsible for providing a single instance of the PlayerLogRepository.

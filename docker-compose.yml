@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16.0
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: wallet
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:7.2
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "user@mail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+
+    ports:
+      - "5050:80"
+

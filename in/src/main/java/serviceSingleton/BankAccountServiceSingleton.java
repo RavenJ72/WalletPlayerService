@@ -1,7 +1,7 @@
-package serviceFactories;
+package serviceSingleton;
 
 import applicationServices.services.BankAccountService;
-import repositoriesImpl.repoFactories.BankAccountRepositorySingleton;
+import repoSingleton.BankAccountRepositorySingleton;
 import services.BankAccountServiceImpl;
 
 /**

@@ -1,4 +1,4 @@
-package repositoriesImpl.logsRepoImpl;
+package inMemoryRepositories.logsRepoImpl;
 
 import model.PlayerLog;
 import modelRepositoriesI.PlayerLogRepository;

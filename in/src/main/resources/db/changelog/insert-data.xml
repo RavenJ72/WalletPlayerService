@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
+
+    <changeSet id="5" author="Gleb">
+        <!-- Создание тестового банковского аккаунта -->
+        <insert tableName="bank_account" schemaName="wallet">
+            <column name="balance" valueNumeric="10000.00"/>
+        </insert>
+
+        <!-- Создание тестового пользователя -->
+        <insert tableName="player" schemaName="wallet">
+            <column name="login" value="testUser"/>
+            <column name="password" value="testPassword"/>
+            <column name="player_role" value="USER"/>
+            <column name="bank_account_id" value="1"/>
+        </insert>
+
+        <!-- Добавление двух тестовых транзакций для этого банковского аккаунта -->
+        <insert tableName="transaction" schemaName="wallet">
+            <column name="bank_account_id" value="1"/>
+            <column name="amount" valueNumeric="100.00"/>
+            <column name="type" value="DEPOSIT"/>
+            <column name="creation_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="transaction" schemaName="wallet">
+            <column name="bank_account_id" value="1"/>
+            <column name="amount" valueNumeric="200.00"/>
+            <column name="type" value="WITHDRAWAL"/>
+            <column name="creation_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

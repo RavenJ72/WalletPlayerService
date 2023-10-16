@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class Player {
     private String login;
     private String password;
-    private LocalDateTime creationTime;
     private String playerRole;
     private String bankAccountId;
 
@@ -24,7 +23,6 @@ public class Player {
         this.login = nickname;
         this.password = password;
         this.bankAccountId = bankAccountId;
-        this.creationTime = LocalDateTime.now();
         this.playerRole = "USER";
     }
 
@@ -51,9 +49,7 @@ public class Player {
      *
      * @return The creation time.
      */
-    public LocalDateTime getCreationTime() {
-        return creationTime;
-    }
+
 
     /**
      * Get the unique ID of the player's associated bank account.
@@ -100,7 +96,6 @@ public class Player {
     public String toString() {
         return "\nPlayer Information:" +
                 "\nLogin: " + login +
-                "\nCreation Time: " + creationTime +
                 "\nPlayer Role: " + playerRole +
                 "\nBank Account ID: " + bankAccountId + "\n";
     }

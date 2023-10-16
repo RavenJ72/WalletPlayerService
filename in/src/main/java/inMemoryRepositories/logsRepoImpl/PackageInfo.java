@@ -1,4 +1,4 @@
-package repositoriesImpl.logsRepoImpl;
+package inMemoryRepositories.logsRepoImpl;
 
 /**
  * This package contains the implementations of repository interfaces for managing logs in the application.

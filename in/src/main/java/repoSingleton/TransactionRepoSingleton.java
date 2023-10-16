@@ -1,7 +1,7 @@
-package repositoriesImpl.repoFactories;
+package repoSingleton;
 
 import modelRepositoriesI.TransactionRepository;
-import repositoriesImpl.modelsRepoImpl.TransactionRepositoryImpl;
+import inMemoryRepositories.modelsRepoImpl.TransactionRepositoryImpl;
 
 /**
  * A singleton class responsible for providing a single instance of the TransactionRepository.

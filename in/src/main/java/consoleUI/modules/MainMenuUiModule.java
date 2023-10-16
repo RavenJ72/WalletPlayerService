@@ -4,7 +4,7 @@ import applicationServices.exceptions.player.PlayerDontExistException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
 import applicationServices.services.PlayerService;
 import consoleUI.input.ScannerSingleton;
-import serviceFactories.PlayerServiceSingleton;
+import serviceSingleton.PlayerServiceSingleton;
 import model.Player;
 
 import java.util.Scanner;

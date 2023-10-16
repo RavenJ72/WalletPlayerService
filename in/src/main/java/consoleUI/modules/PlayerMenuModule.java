@@ -5,10 +5,10 @@ import applicationServices.services.*;
 import consoleUI.input.ScannerSingleton;
 import model.Player;
 import model.PlayerLog;
-import serviceFactories.BankAccountServiceSingleton;
-import serviceFactories.PlayerLogServiceSingleton;
-import serviceFactories.PlayerServiceSingleton;
-import serviceFactories.TransactionServiceSingleton;
+import serviceSingleton.BankAccountServiceSingleton;
+import serviceSingleton.PlayerLogServiceSingleton;
+import serviceSingleton.PlayerServiceSingleton;
+import serviceSingleton.TransactionServiceSingleton;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

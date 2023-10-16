@@ -1,8 +1,8 @@
-package repositoriesImpl.repoFactories;
+package repoSingleton;
 
 import model.Player;
 import modelRepositoriesI.PlayerRepository;
-import repositoriesImpl.modelsRepoImpl.PlayerRepositoryImpl;
+import inMemoryRepositories.modelsRepoImpl.PlayerRepositoryImpl;
 
 /**
  * A singleton class responsible for providing a single instance of the PlayerRepository.

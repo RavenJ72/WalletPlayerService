@@ -1,7 +1,7 @@
-package repositoriesImpl.repoFactories;
+package repoSingleton;
 
 import modelRepositoriesI.BankAccountRepository;
-import repositoriesImpl.modelsRepoImpl.BankAccountRepositoryImpl;
+import inMemoryRepositories.modelsRepoImpl.BankAccountRepositoryImpl;
 
 /**
  * A singleton class responsible for providing a single instance of the BankAccountRepository.

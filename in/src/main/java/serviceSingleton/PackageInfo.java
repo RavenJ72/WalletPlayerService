@@ -1,4 +1,4 @@
-package serviceFactories;
+package serviceSingleton;
 /**
  * This package contains singleton classes responsible for providing single instances of various application services.
  *

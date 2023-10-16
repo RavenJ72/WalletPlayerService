@@ -1,4 +1,4 @@
-package repositoriesImpl.modelsRepoImpl;
+package inMemoryRepositories.modelsRepoImpl;
 
 import model.BankAccount;
 import modelRepositoriesI.BankAccountRepository;

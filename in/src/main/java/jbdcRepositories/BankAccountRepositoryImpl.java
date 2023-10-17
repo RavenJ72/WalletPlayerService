@@ -13,18 +13,17 @@ import java.sql.*;
 public class BankAccountRepositoryImpl implements BankAccountRepository {
 
     private final TransactionRepository transactionRepository;
-    private final  Connection connection;
 
-    public BankAccountRepositoryImpl(TransactionRepository transactionRepository, Connection connection) {
+    public BankAccountRepositoryImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.connection = connection;
     }
 
     @Override
     public BankAccount save(BankAccount bankAccount) {
         String sql = "INSERT INTO wallet.bank_account (balance) VALUES (0) RETURNING id";
 
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DatabaseManager.getConnection();
+             Statement statement = connection.createStatement()) {
 
             connection.setAutoCommit(false);
 
@@ -45,6 +44,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     public BankAccount findById(Long id) {
         String sql = "SELECT id, balance FROM wallet.bank_account WHERE id = " + id;
         try {
+            Connection connection = DatabaseManager.getConnection();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(sql)) {
                 if (rs.next()) {
@@ -65,7 +65,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     public boolean withdrawMoney(Long bankAccountId, BigDecimal amount, Long transactionId) {
         Connection connection = null;
         try {
-
+            connection = DatabaseManager.getConnection();
             connection.setAutoCommit(false);
 
             // Проверяем баланс

@@ -1,5 +1,6 @@
 package applicationServices.services;
 
+
 import applicationServices.exceptions.BaseException;
 import model.PlayerLog;
 
@@ -26,7 +27,6 @@ public interface PlayerLogService {
      *
      * @param login The login of the player whose log entries are to be retrieved.
      * @return A list of player log entries for the specified player.
-     * @throws BaseException If an error occurs during the operation.
      */
     List<PlayerLog> getByLogin(String login) throws BaseException;
 }

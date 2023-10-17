@@ -12,7 +12,7 @@
             <column name="id" type="BIGINT" defaultValue="nextval('wallet.transaction_id_seq')">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="bank_account_id" type="VARCHAR(36)">
+            <column name="bank_account_id" type="BIGINT">
                 <constraints nullable="true" referencedTableName="bank_account"/>
             </column>
             <column name="amount" type="DECIMAL(20,2)">
@@ -21,9 +21,10 @@
             <column name="type" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="creation_time" type="TIMESTAMP">
+            <column name="creation_time" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
+
         </createTable>
     </changeSet>
 

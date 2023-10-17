@@ -21,36 +21,24 @@
     <dependencies>
         <dependency>
             <groupId>org.ylabs</groupId>
-            <artifactId>repositories</artifactId>
-            <version>${project.version}</version>
+            <artifactId>services</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.ylabs</groupId>
-            <artifactId>services</artifactId>
-            <version>${project.version}</version>
+            <artifactId>repositories</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.ylabs</groupId>
             <artifactId>logic</artifactId>
-            <version>${project.version}</version>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.ylabs</groupId>
-            <artifactId>domain</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.5.4</version>
-        </dependency>
-
     </dependencies>
+
 
     <build>
         <plugins>

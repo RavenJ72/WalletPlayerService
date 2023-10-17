@@ -19,9 +19,10 @@
             <column name="password" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="player_role" type="VARCHAR(255)">
+            <column name="player_role" type="VARCHAR(255)" defaultValue="USER">
                 <constraints nullable="false"/>
             </column>
+
             <column name="bank_account_id" type="VARCHAR(36)">
                 <constraints nullable="false" unique="true"/>
             </column>

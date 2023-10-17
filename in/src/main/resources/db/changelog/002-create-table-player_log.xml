@@ -21,9 +21,10 @@
             <column name="result" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="creation_time" type="TIMESTAMP">
+            <column name="creation_time" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
+
         </createTable>
     </changeSet>
 

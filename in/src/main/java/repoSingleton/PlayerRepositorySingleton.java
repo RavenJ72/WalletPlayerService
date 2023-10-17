@@ -1,8 +1,9 @@
 package repoSingleton;
 
+import jbdcRepositories.PlayerRepositoryImpl;
 import model.Player;
 import modelRepositoriesI.PlayerRepository;
-import inMemoryRepositories.modelsRepoImpl.PlayerRepositoryImpl;
+
 
 /**
  * A singleton class responsible for providing a single instance of the PlayerRepository.
@@ -33,10 +34,6 @@ public final class PlayerRepositorySingleton {
         if (playerRepositoryInstance == null) {
             playerRepositoryInstance = new PlayerRepositoryImpl();
 
-            // Initialize with an admin user if the repository is created for the first time
-            Player player = new Player("admin", "admin", null);
-            player.setPlayerRole("ADMIN");
-            playerRepositoryInstance.save(player);
         }
         return playerRepositoryInstance;
     }

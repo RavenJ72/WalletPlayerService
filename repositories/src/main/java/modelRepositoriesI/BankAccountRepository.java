@@ -2,6 +2,8 @@ package modelRepositoriesI;
 
 import model.BankAccount;
 
+import java.math.BigDecimal;
+
 /**
  * An interface representing a repository for managing bank accounts.
  *
@@ -24,5 +26,8 @@ public interface BankAccountRepository {
      * @param id The unique ID of the bank account to find.
      * @return The found bank account, or null if not found.
      */
-    BankAccount findById(String id);
+    BankAccount findById(Long id);
+
+    boolean depositMoney(Long bankAccountId, BigDecimal amount, Long transactionId);
+    boolean withdrawMoney(Long bankAccountId, BigDecimal amount, Long transactionId);
 }

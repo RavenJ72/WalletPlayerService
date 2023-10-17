@@ -1,7 +1,9 @@
 package serviceSingleton;
 
 import applicationServices.services.PlayerService;
+import repoSingleton.BankAccountRepositorySingleton;
 import repoSingleton.PlayerRepositorySingleton;
+import repoSingleton.TransactionRepoSingleton;
 import services.PlayerServiceImpl;
 
 /**
@@ -30,9 +32,7 @@ public final class PlayerServiceSingleton {
     public static PlayerService getPlayerService() {
         if (playerServiceInstance == null) {
             playerServiceInstance = new PlayerServiceImpl(
-                    PlayerRepositorySingleton.getPlayerRepository(),
-                    BankAccountServiceSingleton.getBankAccountService()
-            );
+                    PlayerRepositorySingleton.getPlayerRepository(), BankAccountRepositorySingleton.getBankAccountRepository(), TransactionRepoSingleton.getTransactionRepository());
         }
         return playerServiceInstance;
     }

@@ -1,7 +1,8 @@
 package repoSingleton;
 
+import jbdcRepositories.PlayerLogRepositoryImpl;
 import modelRepositoriesI.PlayerLogRepository;
-import inMemoryRepositories.logsRepoImpl.PlayerLogRepositoryImpl;
+
 
 /**
  * A singleton class responsible for providing a single instance of the PlayerLogRepository.

@@ -1,7 +1,9 @@
 package repoSingleton;
 
+import jbdcRepositories.BankAccountRepositoryImpl;
+import jbdcRepositories.connection.DatabaseManager;
 import modelRepositoriesI.BankAccountRepository;
-import inMemoryRepositories.modelsRepoImpl.BankAccountRepositoryImpl;
+
 
 /**
  * A singleton class responsible for providing a single instance of the BankAccountRepository.
@@ -28,7 +30,7 @@ public final class BankAccountRepositorySingleton {
      */
     public static BankAccountRepository getBankAccountRepository() {
         if (bankAccountRepositoryInstance == null) {
-            bankAccountRepositoryInstance = new BankAccountRepositoryImpl();
+            bankAccountRepositoryInstance = new BankAccountRepositoryImpl(TransactionRepoSingleton.getTransactionRepository(), DatabaseManager.getConnection());
         }
         return bankAccountRepositoryInstance;
     }

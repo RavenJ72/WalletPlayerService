@@ -1,10 +1,9 @@
 package consoleUI.modules;
 
+
 import applicationServices.exceptions.BaseException;
-import applicationServices.services.BankAccountService;
-import applicationServices.services.PlayerLogService;
-import applicationServices.services.PlayerService;
-import applicationServices.services.TransactionService;
+import applicationServices.services.*;
+
 import consoleUI.input.ScannerSingleton;
 import serviceSingleton.BankAccountServiceSingleton;
 import serviceSingleton.PlayerLogServiceSingleton;
@@ -13,6 +12,7 @@ import serviceSingleton.TransactionServiceSingleton;
 import model.Player;
 import model.PlayerLog;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -58,7 +58,10 @@ public class AdminMenuModule {
                         login = scanner.nextLine();
                     } while (login.isEmpty());
 
+
+
                     try {
+
                         playerLogService.getByLogin(login).forEach(System.out::println);
                         playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking player " + currentPlayer.getLogin() + " logs", "Success"));
                         System.out.println();
@@ -66,13 +69,18 @@ public class AdminMenuModule {
                         playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking player " + currentPlayer.getLogin() + " logs", "Fail"));
                         System.out.println(e.getMessage());
                     }
+
                     break;
 
                 case "2":
-                    playerService.getAll().forEach(System.out::println);
-                    playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking all players", "Success"));
+                    List<Player> allPlayers = playerService.getAll();
+                    if(allPlayers!=null){
+                        allPlayers.forEach(System.out::println);
+                        playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking all players", "Success"));
+                    }else{
+                        playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking all players", "Fail"));
+                    }
                     break;
-
                 case "3":
                     System.out.println("Termination of the application process");
                     break;

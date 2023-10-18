@@ -30,6 +30,7 @@
         <version.liquibase-core>4.24.0</version.liquibase-core>
         <version.lombok>1.18.30</version.lombok>
         <version.testcontainers.pg>1.19.1</version.testcontainers.pg>
+        <version.testcontainers.junit-jupiter>1.19.1</version.testcontainers.junit-jupiter>
 
         <!--plugins-->
         <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
@@ -80,6 +81,12 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
             <version>${version.testcontainers.pg}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${version.testcontainers.junit-jupiter}</version>
             <scope>test</scope>
         </dependency>
 

@@ -10,7 +10,7 @@ import jbdcRepositories.connection.DatabaseManager;
 public class ConsoleApplication {
     public static void main(String[] args) {
         // Create an instance of the MainMenuUiModule, which represents the main menu user interface.
-        DatabaseManager.makeMigrations();
+        DatabaseManager.makeMigrations(DatabaseManager.getUrl());
         System.out.println("\n");
         MainMenuUiModule mainMenu = new MainMenuUiModule();
 

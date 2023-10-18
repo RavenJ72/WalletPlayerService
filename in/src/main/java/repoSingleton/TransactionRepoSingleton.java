@@ -1,6 +1,7 @@
 package repoSingleton;
 
 import jbdcRepositories.TransactionRepositoryImpl;
+import jbdcRepositories.connection.DatabaseManager;
 import modelRepositoriesI.TransactionRepository;
 
 
@@ -29,7 +30,7 @@ public final class TransactionRepoSingleton {
      */
     public static TransactionRepository getTransactionRepository() {
         if (transactionRepositoryInstance == null) {
-            transactionRepositoryInstance = new TransactionRepositoryImpl();
+            transactionRepositoryInstance = new TransactionRepositoryImpl(DatabaseManager.getUrl());
         }
         return transactionRepositoryInstance;
     }

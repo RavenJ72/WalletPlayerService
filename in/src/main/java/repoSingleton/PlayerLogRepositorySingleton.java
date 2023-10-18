@@ -1,6 +1,7 @@
 package repoSingleton;
 
 import jbdcRepositories.PlayerLogRepositoryImpl;
+import jbdcRepositories.connection.DatabaseManager;
 import modelRepositoriesI.PlayerLogRepository;
 
 
@@ -26,7 +27,7 @@ public final class PlayerLogRepositorySingleton {
      */
     public static PlayerLogRepository getPlayerLogRepository() {
         if (playerLogRepositoryInstance == null) {
-            playerLogRepositoryInstance = new PlayerLogRepositoryImpl();
+            playerLogRepositoryInstance = new PlayerLogRepositoryImpl(DatabaseManager.getUrl());
         }
         return playerLogRepositoryInstance;
     }

@@ -13,16 +13,18 @@ import java.sql.*;
 public class BankAccountRepositoryImpl implements BankAccountRepository {
 
     private final TransactionRepository transactionRepository;
+    private final String url;
 
-    public BankAccountRepositoryImpl(TransactionRepository transactionRepository) {
+    public BankAccountRepositoryImpl(TransactionRepository transactionRepository, String url) {
         this.transactionRepository = transactionRepository;
+        this.url = url;
     }
 
     @Override
     public BankAccount save(BankAccount bankAccount) {
         String sql = "INSERT INTO wallet.bank_account (balance) VALUES (0) RETURNING id";
 
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection(url);
              Statement statement = connection.createStatement()) {
 
             connection.setAutoCommit(false);
@@ -44,7 +46,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     public BankAccount findById(Long id) {
         String sql = "SELECT id, balance FROM wallet.bank_account WHERE id = " + id;
         try {
-            Connection connection = DatabaseManager.getConnection();
+            Connection connection = DatabaseManager.getConnection(url);
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(sql)) {
                 if (rs.next()) {
@@ -65,7 +67,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     public boolean withdrawMoney(Long bankAccountId, BigDecimal amount, Long transactionId) {
         Connection connection = null;
         try {
-            connection = DatabaseManager.getConnection();
+            connection = DatabaseManager.getConnection(url);
             connection.setAutoCommit(false);
 
             // Проверяем баланс
@@ -126,7 +128,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     public boolean depositMoney(Long bankAccountId, BigDecimal amount, Long transactionId) {
         Connection connection = null;
         try {
-            connection = DatabaseManager.getConnection();
+            connection = DatabaseManager.getConnection(url);
             connection.setAutoCommit(false);
 
 

@@ -1,7 +1,7 @@
 package repoSingleton;
 
 import jbdcRepositories.PlayerRepositoryImpl;
-import model.Player;
+import jbdcRepositories.connection.DatabaseManager;
 import modelRepositoriesI.PlayerRepository;
 
 
@@ -32,7 +32,7 @@ public final class PlayerRepositorySingleton {
      */
     public static PlayerRepository getPlayerRepository() {
         if (playerRepositoryInstance == null) {
-            playerRepositoryInstance = new PlayerRepositoryImpl();
+            playerRepositoryInstance = new PlayerRepositoryImpl(DatabaseManager.getUrl());
 
         }
         return playerRepositoryInstance;

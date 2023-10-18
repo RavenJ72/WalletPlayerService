@@ -36,17 +36,17 @@ public class DatabaseManager {
 
 
 
-    public static Connection getConnection(){
+    public static Connection getConnection(String url){
         try {
-            return DriverManager.getConnection(url, username, password);
+            return DriverManager.getConnection(url,username, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void makeMigrations(){
+    public static void makeMigrations(String url){
         // Создание соединения с базой данных
-        Connection connection = getConnection();
+        Connection connection = getConnection(url);
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -71,6 +71,9 @@ public class DatabaseManager {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    public static String getUrl(){
+        return url;
     }
 
 

@@ -30,7 +30,7 @@ public final class BankAccountRepositorySingleton {
      */
     public static BankAccountRepository getBankAccountRepository() {
         if (bankAccountRepositoryInstance == null) {
-            bankAccountRepositoryInstance = new BankAccountRepositoryImpl(TransactionRepoSingleton.getTransactionRepository());
+            bankAccountRepositoryInstance = new BankAccountRepositoryImpl(TransactionRepoSingleton.getTransactionRepository(), DatabaseManager.getUrl());
         }
         return bankAccountRepositoryInstance;
     }

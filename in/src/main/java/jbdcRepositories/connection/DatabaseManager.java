@@ -16,6 +16,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+/**
+ * Provides functionality for managing database connections and executing migrations.
+ *
+ * This class encapsulates logic for establishing connections to the database, executing
+ * schema migrations, and retrieving database configurations.
+ *
+ * @author Gleb Nickolaenko
+ */
 public class DatabaseManager {
     private static final String DB_PROPERTIES_FILE = "/database.properties";
     private static String url;
@@ -34,26 +42,35 @@ public class DatabaseManager {
         password = properties.getProperty("db.password");
     }
 
-
-
+    /**
+     * Establishes a connection to the database.
+     *
+     * @param url The URL of the database.
+     * @return A Connection object representing the database connection.
+     */
     public static Connection getConnection(String url){
         try {
-            return DriverManager.getConnection(url,username, password);
+            return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Executes schema migrations to set up the necessary database structures.
+     *
+     * @param url The URL of the database to execute migrations against.
+     */
     public static void makeMigrations(String url){
-        // Создание соединения с базой данных
+        // Establishing a connection to the database
         Connection connection = getConnection(url);
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            // Создание схемы migration для системных таблиц Liquibase
+            // Creating the migration schema for Liquibase system tables
             statement.execute("CREATE SCHEMA IF NOT EXISTS migration");
 
-            // Создание схемы wallet для таблиц приложения
+            // Creating the wallet schema for application tables
             statement.execute("CREATE SCHEMA IF NOT EXISTS wallet");
 
             try {
@@ -63,7 +80,7 @@ public class DatabaseManager {
                 liquibase.setChangeLogParameter("liquibase.schema", "migration");
                 liquibase.update(new Contexts(), new LabelExpression());
                 connection.close();
-                System.out.println("Миграции успешно выполнены!");
+                System.out.println("Migrations successfully executed!");
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -72,11 +89,13 @@ public class DatabaseManager {
             throw new RuntimeException(ex);
         }
     }
+
+    /**
+     * Retrieves the database URL.
+     *
+     * @return The URL of the database.
+     */
     public static String getUrl(){
         return url;
     }
-
-
-
-
 }

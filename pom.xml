@@ -29,6 +29,7 @@
         <version.postgresql>42.6.0</version.postgresql>
         <version.liquibase-core>4.24.0</version.liquibase-core>
         <version.lombok>1.18.30</version.lombok>
+        <version.testcontainers.pg>1.19.1</version.testcontainers.pg>
 
         <!--plugins-->
         <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
@@ -76,25 +77,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version> <!-- Use the latest version -->
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.19.1</version>
+            <version>${version.testcontainers.pg}</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- Testcontainers JUnit Jupiter integration -->
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>1.19.1</version> <!-- Use the latest version -->
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 </project>

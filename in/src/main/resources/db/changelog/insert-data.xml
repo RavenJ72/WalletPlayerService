@@ -1,0 +1,35 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
+
+    <changeSet id="5" author="Gleb">
+        <insert tableName="bank_account" schemaName="wallet">
+            <column name="balance" valueNumeric="100000.00"/>
+        </insert>
+
+
+        <insert tableName="player" schemaName="wallet">
+            <column name="login" value="admin"/>
+            <column name="password" value="admin"/>
+            <column name="player_role" value="ADMIN"/>
+            <column name="bank_account_id" value="1"/>
+        </insert>
+
+
+        <insert tableName="transaction" schemaName="wallet">
+            <column name="bank_account_id" value="1"/>
+            <column name="amount" valueNumeric="1000.00"/>
+            <column name="type" value="DEPOSIT"/>
+            <column name="creation_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="transaction" schemaName="wallet">
+            <column name="bank_account_id" value="1"/>
+            <column name="amount" valueNumeric="2000.00"/>
+            <column name="type" value="WITHDRAWAL"/>
+            <column name="creation_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

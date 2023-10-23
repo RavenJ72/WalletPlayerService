@@ -1,5 +1,6 @@
 package applicationServices.services;
 
+
 import applicationServices.exceptions.BaseException;
 import model.Player;
 import model.Transaction;
@@ -21,7 +22,7 @@ public interface PlayerService {
      *
      * @param player The player entity to be created.
      * @return The created player entity.
-     * @throws BaseException If an error occurs during the operation.
+
      */
     Player createPlayer(Player player) throws BaseException;
 
@@ -30,7 +31,7 @@ public interface PlayerService {
      *
      * @param login The login of the player to retrieve.
      * @return The player entity with the specified login, or null if not found.
-     * @throws BaseException If an error occurs during the operation.
+
      */
     Player findPlayerByLogin(String login) throws BaseException;
 
@@ -39,18 +40,17 @@ public interface PlayerService {
      *
      * @param bankAccountId The ID of the bank account to check the balance.
      * @return The current balance of the bank account.
-     * @throws BaseException If an error occurs during the operation.
+
      */
-    BigDecimal checkBalance(String bankAccountId) throws BaseException;
+    BigDecimal checkBalance(Long bankAccountId) throws BaseException;
 
     /**
      * Retrieves the transaction history for a bank account.
      *
      * @param bankAccountId The ID of the bank account to retrieve the transaction history.
      * @return A list of financial transactions associated with the bank account.
-     * @throws BaseException If an error occurs during the operation.
      */
-    List<Transaction> getTransactionHistory(String bankAccountId) throws BaseException;
+    List<Transaction> getTransactionHistory(Long bankAccountId) throws BaseException;
 
     /**
      * Retrieves a list of all player entities.
@@ -66,9 +66,8 @@ public interface PlayerService {
      * @param amount The amount to withdraw.
      * @param transactionId The unique ID of the transaction.
      * @return True if the withdrawal is successful, false otherwise.
-     * @throws BaseException If an error occurs during the operation.
      */
-    boolean withdrawMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException;
+    boolean withdrawMoney(Long bankAccountId, BigDecimal amount, Long transactionId) throws BaseException;
 
     /**
      * Deposits a specified amount of money into a bank account.
@@ -77,9 +76,8 @@ public interface PlayerService {
      * @param amount The amount to deposit.
      * @param transactionId The unique ID of the transaction.
      * @return True if the deposit is successful, false otherwise.
-     * @throws BaseException If an error occurs during the operation.
      */
-    boolean depositMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException;
+    boolean depositMoney(Long bankAccountId, BigDecimal amount, Long transactionId) throws BaseException;
 
 
 }

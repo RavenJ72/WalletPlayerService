@@ -1,33 +1,36 @@
 package services;
 
 import applicationServices.exceptions.BaseException;
-import applicationServices.exceptions.bankAccount.BankAccountNotEnoughMoney;
 import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
-import applicationServices.services.BankAccountService;
-import applicationServices.services.TransactionService;
+import applicationServices.services.*;
 import model.BankAccount;
-import model.Transaction;
 import modelRepositoriesI.BankAccountRepository;
-
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * A service class for managing bank accounts and related financial transactions.
- *
+ * <p>
  * This service class provides methods for creating, retrieving, and managing bank accounts,
  * as well as performing financial transactions such as withdrawals and deposits.
+ * </p>
  *
  * @author Gleb Nickolaenko
  */
 public class BankAccountServiceImpl implements BankAccountService {
+
     private final BankAccountRepository bankAccountRepository;
     private final TransactionService transactionService;
 
     /**
-     * Constructs a new BankAccountService with the specified repositories and services.
+     * Constructs a new {@code BankAccountServiceImpl} with the specified bank account repository
+     * and transaction service.
      *
-     * @param bankAccountRepository The repository for managing bank accounts.
-     * @param transactionService The service for managing financial transactions.
+     * @param bankAccountRepository the repository for managing bank accounts.
+     * @param transactionService the service for managing transactions.
      */
     public BankAccountServiceImpl(BankAccountRepository bankAccountRepository, TransactionService transactionService) {
         this.bankAccountRepository = bankAccountRepository;
@@ -35,10 +38,10 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     /**
-     * Creates or updates a bank account in the system.
+     * Saves a bank account to the repository.
      *
-     * @param bankAccount The bank account to save or update.
-     * @return The saved or updated bank account.
+     * @param bankAccount the bank account to be saved.
+     * @return the saved bank account.
      */
     @Override
     public BankAccount save(BankAccount bankAccount) {
@@ -46,88 +49,22 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     /**
-     * Retrieves a bank account by its unique ID.
+     * Finds a bank account by its unique ID.
+     * <p>
+     * If no bank account with the specified ID is found, a {@code BankAccountNotFoundException} is thrown.
+     * </p>
      *
-     * @param id The unique ID of the bank account to retrieve.
-     * @return The bank account with the specified ID.
-     * @throws BaseException if the bank account doesn't exist.
+     * @param id the unique ID of the bank account to find.
+     * @return the found bank account.
+     * @throws BankAccountNotFoundException if no bank account with the specified ID is found.
      */
     @Override
-    public BankAccount findAccountById(String id) throws BaseException {
+    public BankAccount findAccountById(Long id) throws BankAccountNotFoundException {
         BankAccount bankAccount = bankAccountRepository.findById(id);
         if(bankAccount == null){
-            throw new BankAccountNotFoundException("The requested account doesn't exist");
+            throw new BankAccountNotFoundException("There is no account with such ids");
         }
         return bankAccount;
     }
 
-    /**
-     * Performs a withdrawal operation from a bank account.
-     *
-     * @param bankAccountId The ID of the bank account from which to withdraw.
-     * @param amount The amount to withdraw.
-     * @param transactionId The ID of the transaction (optional).
-     * @return true if the withdrawal is successful, false otherwise.
-     * @throws BaseException if the operation encounters an error, such as a non-existing account or insufficient funds.
-     */
-    @Override
-    public boolean withdrawMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException {
-        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId);
-        if(bankAccount == null){
-            throw new BankAccountNotFoundException("The specified account doesn't exist");
-        }
-
-        Transaction transaction = new Transaction(Transaction.TransactionType.DEBIT.toString(), amount, bankAccountId);
-
-        if(transactionId != null){
-            transaction.setId(transactionId);
-        }
-
-        if(bankAccount.getBalance().intValue() - amount.intValue() < 0){
-            throw new BankAccountNotEnoughMoney("There are not enough funds for withdrawal");
-        }
-        try {
-            transactionService.save(transaction);
-        } catch (BaseException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
-        bankAccount.getPlayerTransactions().add(transaction);
-        bankAccount.setBalance(bankAccount.getBalance().subtract(amount));
-
-        return true;
-    }
-
-    /**
-     * Performs a deposit operation into a bank account.
-     *
-     * @param bankAccountId The ID of the bank account to which to deposit.
-     * @param amount The amount to deposit.
-     * @param transactionId The ID of the transaction (optional).
-     * @return true if the deposit is successful, false otherwise.
-     * @throws BaseException if the operation encounters an error, such as a non-existing account.
-     */
-    @Override
-    public boolean depositMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException {
-        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId);
-        if(bankAccount == null){
-            throw new BankAccountNotFoundException("The specified account doesn't exist");
-        }
-
-        Transaction transaction = new Transaction(Transaction.TransactionType.CREDIT.toString(), amount, bankAccountId);
-
-        if(transactionId != null){
-            transaction.setId(transactionId);
-        }
-
-        try {
-            transactionService.save(transaction);
-        } catch (BaseException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
-        bankAccount.getPlayerTransactions().add(transaction);
-        bankAccount.setBalance(bankAccount.getBalance().add(amount));
-        return true;
-    }
 }

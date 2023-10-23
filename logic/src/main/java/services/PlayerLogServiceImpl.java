@@ -1,5 +1,6 @@
 package services;
 
+
 import applicationServices.exceptions.BaseException;
 import applicationServices.exceptions.playerLog.PlayerLogDontExistException;
 import applicationServices.services.PlayerLogService;
@@ -43,14 +44,14 @@ public class PlayerLogServiceImpl implements PlayerLogService {
      *
      * @param login The login of the player to retrieve log entries for.
      * @return A list of player log entries for the specified player.
-     * @throws BaseException if there are no log entries for the specified player.
+
      */
     @Override
-    public List<PlayerLog> getByLogin(String login) throws BaseException {
-        List<PlayerLog> playerLogList = playerLogRepository.getByPlayerLogsByLogin(login);
+    public List<PlayerLog> getByLogin(String login)  throws BaseException {
 
-        if (playerLogList == null || playerLogList.isEmpty()) {
-            throw new PlayerLogDontExistException("No log entries exist for the specified player.");
+        List<PlayerLog> playerLogList = playerLogRepository.getByPlayerLogsByLogin(login);
+        if (playerLogList == null){
+            throw new PlayerLogDontExistException("There are no logs for a user with such a login");
         }
         return playerLogList;
     }

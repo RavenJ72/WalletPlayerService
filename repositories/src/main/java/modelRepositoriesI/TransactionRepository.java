@@ -21,17 +21,11 @@ public interface TransactionRepository {
     Transaction save(Transaction transaction);
 
     /**
-     * Retrieves a list of all financial transactions in the repository.
+     * Retrieves a list of all financial transactions by player id in the repository.
      *
      * @return A list of all financial transactions.
      */
-    List<Transaction> getAll();
+    List<Transaction> getAllById(Long id);
 
-    /**
-     * Retrieves a financial transaction by its unique ID.
-     *
-     * @param id The unique ID of the financial transaction to retrieve.
-     * @return The financial transaction with the specified ID, or null if not found.
-     */
-    Transaction getById(String id);
+
 }

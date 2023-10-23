@@ -1,6 +1,7 @@
 package services;
 
 import applicationServices.exceptions.BaseException;
+import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
 import applicationServices.exceptions.transaction.TransactionDontExistException;
 import applicationServices.exceptions.transaction.TransactionNotUniqIDException;
 import applicationServices.services.TransactionService;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * A service class for managing financial transactions and related operations.
  *
- * This service class provides methods for creating, retrieving, and managing financial transactions.
+ * This service class encapsulates the logic for creating, retrieving, and managing financial transactions.
  *
  * @author Gleb Nickolaenko
  */
@@ -21,53 +22,44 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
 
     /**
-     * Constructs a new TransactionService with the specified transaction repository.
+     * Constructs a new TransactionService with the specified repository.
      *
-     * @param transactionRepository The repository for managing financial transactions.
+     * @param transactionRepository The repository for managing transaction information.
      */
     public TransactionServiceImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
 
     /**
-     * Saves a new transaction in the system.
+     * Saves a transaction in the system.
      *
-     * @param transaction The transaction to save.
+     * @param transaction The transaction to be saved.
      * @return The saved transaction.
-     * @throws BaseException if a transaction with the same ID already exists.
+     * @throws TransactionNotUniqIDException If a record with the specified ID already exists.
      */
     @Override
-    public Transaction save(Transaction transaction) throws BaseException {
-        if (transactionRepository.getById(transaction.getId()) != null) {
-            throw new TransactionNotUniqIDException("A transaction with the same ID already exists");
+    public Transaction save(Transaction transaction)  throws BaseException {
+        Transaction transactionJBDC = transactionRepository.save(transaction);
+        if(transactionJBDC == null){
+            throw new TransactionNotUniqIDException("A record with such an ID already exists");
         }
-        return transactionRepository.save(transaction);
+        return transactionJBDC;
     }
 
     /**
-     * Retrieves a list of all financial transactions in the system.
+     * Retrieves all transactions associated with a specified bank account.
      *
-     * @return A list of all financial transactions.
-     * @throws BaseException if an error occurs while retrieving the transactions.
+     * @param id The ID of the bank account to retrieve transactions for.
+     * @return A list of transactions associated with the specified bank account.
+     * @throws BankAccountNotFoundException If there is no account with the specified ID.
      */
     @Override
-    public List<Transaction> getAll() throws BaseException {
-        return transactionRepository.getAll();
+    public List<Transaction> getAllByBankAccId(Long id) throws BaseException{
+        List<Transaction> transactions = transactionRepository.getAllById(id);
+        if(transactions == null){
+            throw new BankAccountNotFoundException("There is no account with such ID");
+        }
+        return transactions;
     }
 
-    /**
-     * Retrieves a specific financial transaction by its ID.
-     *
-     * @param id The ID of the transaction to retrieve.
-     * @return The transaction with the specified ID.
-     * @throws BaseException if the transaction with the specified ID doesn't exist.
-     */
-    @Override
-    public Transaction getById(String id) throws BaseException {
-        Transaction transaction = transactionRepository.getById(id);
-        if (transaction == null) {
-            throw new TransactionDontExistException("Transaction with ID: " + id + " does not exist");
-        }
-        return transaction;
-    }
 }

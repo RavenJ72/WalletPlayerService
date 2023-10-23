@@ -1,15 +1,17 @@
 package services;
 
 import applicationServices.exceptions.BaseException;
-import applicationServices.exceptions.player.PlayerDontExistException;
+import applicationServices.exceptions.bankAccount.BankAccountNotFoundException;
+import applicationServices.exceptions.player.PlayerInvalidEnteredDataException;
 import applicationServices.exceptions.player.PlayerInvalidLoginException;
 import applicationServices.exceptions.player.PlayerNotUniqLoginException;
-import applicationServices.services.BankAccountService;
 import applicationServices.services.PlayerService;
 import model.BankAccount;
 import model.Player;
 import model.Transaction;
+import modelRepositoriesI.BankAccountRepository;
 import modelRepositoriesI.PlayerRepository;
+import modelRepositoriesI.TransactionRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,123 +19,100 @@ import java.util.List;
 /**
  * A service class for managing player accounts and related operations.
  *
- * This service class provides methods for creating, retrieving, and managing player accounts,
- * as well as performing financial transactions and checking account balances.
+ * This class provides methods for creating, retrieving, and managing player accounts,
+ * performing financial transactions, checking account balances, and retrieving transaction history.
  *
  * @author Gleb Nickolaenko
  */
 public class PlayerServiceImpl implements PlayerService {
 
     private final PlayerRepository playerRepository;
-    private final BankAccountService bankAccountService;
+    private final BankAccountRepository bankAccountRepository;
+    private final TransactionRepository transactionRepository;
 
     /**
-     * Constructs a new PlayerService with the specified repositories and services.
+     * Constructs a new PlayerService with the specified repositories.
      *
-     * @param playerRepository The repository for managing player accounts.
-     * @param bankAccountService The service for managing bank accounts.
+     * @param playerRepository The repository for managing player information.
+     * @param bankAccountRepository The repository for managing bank account information.
+     * @param transactionRepository The repository for managing transaction information.
      */
-    public PlayerServiceImpl(PlayerRepository playerRepository, BankAccountService bankAccountService) {
+    public PlayerServiceImpl(PlayerRepository playerRepository,
+                             BankAccountRepository bankAccountRepository,
+                             TransactionRepository transactionRepository) {
         this.playerRepository = playerRepository;
-        this.bankAccountService = bankAccountService;
+        this.bankAccountRepository = bankAccountRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     /**
-     * Creates a new player account in the system.
+     * Creates a new player in the system.
      *
-     * @param player The player account to create.
-     * @return The created player account.
-     * @throws BaseException if the operation encounters an error, such as an invalid login or a duplicate username.
+     * @param player The player to be created.
+     * @return The created player.
+     * @throws PlayerNotUniqLoginException If a player with the specified username already exists.
      */
     @Override
-    public Player createPlayer(Player player) throws BaseException {
-        if (playerRepository.getByLogin(player.getLogin()) == null) {
-            if (validateLogin(player.getLogin())) {
-                BankAccount bankAccount = new BankAccount();
-                bankAccountService.save(bankAccount);
-                player.setBankAccountId(bankAccount.getId());
-                playerRepository.save(player);
-            } else {
-                throw new PlayerInvalidLoginException("Invalid login format");
-            }
-        } else {
-            throw new PlayerNotUniqLoginException("A user with this username already exists.");
+    public Player createPlayer(Player player) throws BaseException{
+        Player playerInJBDC = playerRepository.save(player);
+        if(playerInJBDC == null){
+            throw new PlayerNotUniqLoginException("A player with this username already exists");
         }
-        return playerRepository.save(player);
+        return playerInJBDC;
     }
 
     /**
-     * Retrieves a player account by their login.
+     * Retrieves a player by their login.
      *
      * @param login The login of the player to retrieve.
-     * @return The player account with the specified login.
-     * @throws BaseException if the player account doesn't exist.
+     * @return The retrieved player.
+     * @throws PlayerInvalidLoginException If a player with the specified login does not exist.
      */
     @Override
-    public Player findPlayerByLogin(String login) throws BaseException {
+    public Player findPlayerByLogin(String login) throws BaseException{
         Player player = playerRepository.getByLogin(login);
-        if (player == null) {
-            throw new PlayerDontExistException("The specified player doesn't exist");
+        if(player == null){
+            throw new PlayerInvalidLoginException("A player with this login does not exist");
         }
         return player;
     }
 
     /**
-     * Checks the balance of a player's bank account.
+     * Checks the balance of a specified bank account.
      *
-     * @param bankAccountId The ID of the bank account to check the balance for.
-     * @return The balance of the specified bank account.
-     * @throws BaseException if the bank account doesn't exist.
+     * @param bankAccountId The ID of the bank account to check.
+     * @return The balance of the bank account.
+     * @throws BankAccountNotFoundException If the specified bank account does not exist.
      */
     @Override
-    public BigDecimal checkBalance(String bankAccountId) throws BaseException {
-        return bankAccountService.findAccountById(bankAccountId).getBalance();
+    public BigDecimal checkBalance(Long bankAccountId) throws BaseException {
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId);
+        if(bankAccount == null){
+            throw new BankAccountNotFoundException("There is no account with such ID");
+        }
+        return bankAccount.getBalance();
     }
 
     /**
-     * Retrieves the transaction history for a player's bank account.
+     * Retrieves the transaction history of a specified bank account.
      *
-     * @param bankAccountId The ID of the bank account to retrieve the transaction history for.
-     * @return A list of transaction records for the specified bank account.
-     * @throws BaseException if the bank account doesn't exist.
+     * @param bankAccountId The ID of the bank account to retrieve transactions for.
+     * @return A list of transactions associated with the bank account.
+     * @throws BankAccountNotFoundException If the specified bank account does not exist.
      */
     @Override
-    public List<Transaction> getTransactionHistory(String bankAccountId) throws BaseException {
-        return bankAccountService.findAccountById(bankAccountId).getPlayerTransactions();
+    public List<Transaction> getTransactionHistory(Long bankAccountId) throws BaseException {
+        List<Transaction> transactions =  transactionRepository.getAllById(bankAccountId);
+        if(transactions == null){
+            throw new BankAccountNotFoundException("There is no account with such ID");
+        }
+        return transactions;
     }
 
     /**
-     * Withdraws money from a player's bank account.
+     * Retrieves a list of all players in the system.
      *
-     * @param bankAccountId The ID of the bank account to withdraw from.
-     * @param amount The amount to withdraw.
-     * @param transactionId The ID of the transaction (optional).
-     * @return true if the withdrawal is successful, false otherwise.
-     * @throws BaseException if the operation encounters an error, such as a non-existing account or insufficient funds.
-     */
-    @Override
-    public boolean withdrawMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException {
-        return bankAccountService.withdrawMoney(bankAccountId, amount, transactionId);
-    }
-
-    /**
-     * Deposits money into a player's bank account.
-     *
-     * @param bankAccountId The ID of the bank account to deposit into.
-     * @param amount The amount to deposit.
-     * @param transactionId The ID of the transaction (optional).
-     * @return true if the deposit is successful, false otherwise.
-     * @throws BaseException if the operation encounters an error, such as a non-existing account.
-     */
-    @Override
-    public boolean depositMoney(String bankAccountId, BigDecimal amount, String transactionId) throws BaseException {
-        return bankAccountService.depositMoney(bankAccountId, amount, transactionId);
-    }
-
-    /**
-     * Retrieves a list of all player accounts in the system.
-     *
-     * @return A list of all player accounts.
+     * @return A list of all players.
      */
     @Override
     public List<Player> getAll() {
@@ -141,30 +120,37 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     /**
-     * Validates a player's login for correctness.
+     * Performs a withdrawal operation from a specified bank account.
      *
-     * @param login The login to validate.
-     * @return true if the login is valid, false otherwise.
+     * @param bankAccountId The ID of the bank account to withdraw from.
+     * @param amount The amount to withdraw.
+     * @param transactionId The ID of the transaction.
+     * @return true if the withdrawal operation was successful, false otherwise.
+     * @throws PlayerInvalidEnteredDataException If there's an error with the entered data.
      */
-    private boolean validateLogin(String login) {
-        // Check for null or empty string
-        if (login == null || login.isEmpty()) {
-            return false;
-        }
+    @Override
+    public boolean withdrawMoney(Long bankAccountId, BigDecimal amount, Long transactionId) throws BaseException {
 
-        // Remove leading and trailing spaces and check length
-        login = login.trim();
-        if (login.length() > 12) {
-            return false;
+        if(!bankAccountRepository.withdrawMoney(bankAccountId,amount,transactionId)){
+            throw new PlayerInvalidEnteredDataException("Error of entered data");
         }
+        return true;
+    }
 
-        // Check that the string is not composed only of spaces
-        if (login.matches("\\s+")) {
-            return false;
+    /**
+     * Performs a deposit operation to a specified bank account.
+     *
+     * @param bankAccountId The ID of the bank account to deposit to.
+     * @param amount The amount to deposit.
+     * @param transactionId The ID of the transaction.
+     * @return true if the deposit operation was successful, false otherwise.
+     * @throws PlayerInvalidEnteredDataException If there's an error with the entered data.
+     */
+    @Override
+    public boolean depositMoney(Long bankAccountId, BigDecimal amount, Long transactionId) throws BaseException{
+        if(!bankAccountRepository.depositMoney(bankAccountId,amount,transactionId)){
+            throw new PlayerInvalidEnteredDataException("Error of entered data");
         }
-
-        // If all checks pass, the string is considered valid
         return true;
     }
 }
-

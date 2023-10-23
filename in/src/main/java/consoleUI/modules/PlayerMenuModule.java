@@ -1,22 +1,26 @@
 package consoleUI.modules;
 
+
 import applicationServices.exceptions.BaseException;
 import applicationServices.services.*;
 import consoleUI.input.ScannerSingleton;
 import model.Player;
 import model.PlayerLog;
-import serviceFactories.BankAccountServiceSingleton;
-import serviceFactories.PlayerLogServiceSingleton;
-import serviceFactories.PlayerServiceSingleton;
-import serviceFactories.TransactionServiceSingleton;
+import model.Transaction;
+import serviceSingleton.BankAccountServiceSingleton;
+import serviceSingleton.PlayerLogServiceSingleton;
+import serviceSingleton.PlayerServiceSingleton;
+import serviceSingleton.TransactionServiceSingleton;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Represents the user interface module for player actions in the application.
  * It allows players to perform actions such as withdrawing money, depositing money, checking account balance,
  * viewing transaction history, and logging out.
+ *
  * @author Gleb Nickolaenko
  */
 public class PlayerMenuModule {
@@ -54,84 +58,97 @@ public class PlayerMenuModule {
                 new AdminMenuModule().process(currentPlayer);
                 break;
             } else {
-                try {
-                    displayActionsMenu();
-                    message = scanner.nextLine();
-                    if (null == message) {
-                        System.out.println("Invalid input. Use one of the options listed above.");
-                    } else {
-                        switch (message) {
-                            case "1":
-                                // Withdraw Money
-                                String withdrawAmount;
-                                do {
-                                    System.out.print("Enter the withdrawal amount: ");
-                                    withdrawAmount = scanner.nextLine().trim();
-                                    withdrawAmount = withdrawAmount.replace(',', '.');
-                                } while (withdrawAmount.isEmpty() || withdrawAmount.equals("."));
-                                BigDecimal withdrawalAmount = new BigDecimal(withdrawAmount);
-                                String debitTransactionID = transactionIdAsker(scanner);
-                                try {
-                                    if (playerService.withdrawMoney(currentPlayer.getBankAccountId(), withdrawalAmount, debitTransactionID)) {
-                                        System.out.println("Debit operation was successful");
-                                        playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Withdraw money", "Success"));
-                                    }
-                                } catch (BaseException e) {
-                                    playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Withdraw money", "Fail"));
-                                    System.out.println(e.getMessage());
-                                }
-                                break;
 
-                            case "2":
-                                // Deposit Money
-                                String creditAmountString;
-                                do {
-                                    System.out.print("Enter the deposit amount: ");
-                                    creditAmountString = scanner.nextLine().trim();
-                                    creditAmountString = creditAmountString.replace(',', '.');
-                                } while (creditAmountString.isEmpty() || creditAmountString.equals("."));
-                                BigDecimal depositAmount = new BigDecimal(creditAmountString);
-                                String creditTransactionId = transactionIdAsker(scanner);
-                                try {
-                                    if (playerService.depositMoney(currentPlayer.getBankAccountId(), depositAmount, creditTransactionId)) {
-                                        System.out.println("Credit operation was successful");
-                                        playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Deposit money", "Success"));
-                                    }
-                                } catch (BaseException e) {
-                                    playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Deposit money", "Fail"));
-                                    System.out.println(e.getMessage());
-                                }
-                                break;
+                displayActionsMenu();
+                message = scanner.nextLine();
+                if (null == message) {
+                    System.out.println("Invalid input. Use one of the options listed above.");
+                } else {
+                    switch (message) {
+                        case "1":
+                            // Withdraw Money
+                            String withdrawAmount;
+                            do {
+                                System.out.print("Enter the withdrawal amount: ");
+                                withdrawAmount = scanner.nextLine().trim();
+                                withdrawAmount = withdrawAmount.replace(',', '.');
+                            } while (withdrawAmount.isEmpty() || withdrawAmount.equals("."));
+                            BigDecimal withdrawalAmount = new BigDecimal(withdrawAmount);
+                            Long debitTransactionID = transactionIdAsker(scanner);
 
-                            case "3":
-                                // Check Account Balance
-                                System.out.println("Your balance is: " + playerService.checkBalance(currentPlayer.getBankAccountId()).toString());
+                            try {
+                                playerService.withdrawMoney(currentPlayer.getBankAccountId(), withdrawalAmount, debitTransactionID);
+                                System.out.println("Debit operation was successful");
+                                playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Withdraw money", "Success"));
+                            } catch (BaseException e) {
+                                playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Withdraw money", "Fail"));
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+
+                        case "2":
+                            // Deposit Money
+                            String creditAmountString;
+                            do {
+                                System.out.print("Enter the deposit amount: ");
+                                creditAmountString = scanner.nextLine().trim();
+                                creditAmountString = creditAmountString.replace(',', '.');
+                            } while (creditAmountString.isEmpty() || creditAmountString.equals("."));
+                            BigDecimal depositAmount = new BigDecimal(creditAmountString);
+                            Long creditTransactionId = transactionIdAsker(scanner);
+
+
+                            try {
+                                playerService.depositMoney(currentPlayer.getBankAccountId(), depositAmount, creditTransactionId);
+                                System.out.println("Credit operation was successful");
+                                playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Deposit money", "Success"));
+                            } catch (BaseException e) {
+                                playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Deposit money", "Fail"));
+                                System.out.println(e.getMessage());
+                            }
+
+                            break;
+
+                        case "3":
+                            // Check Account Balance
+
+                            try {
+                                BigDecimal  balance = playerService.checkBalance(currentPlayer.getBankAccountId());
+                                System.out.println("Your balance is: " + balance.toString());
                                 playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking balance", "Success"));
                                 System.out.println();
-                                break;
+                            } catch (BaseException e) {
+                                System.out.println(e.getMessage());
+                                playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking balance", "Fail"));
+                            }
+                            break;
 
-                            case "4":
-                                // View Transaction History
+                        case "4":
+                            // View Transaction History
+
+                            try {
+                                System.out.println("\n");
                                 playerService.getTransactionHistory(currentPlayer.getBankAccountId()).forEach(System.out::println);
                                 playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking transaction history", "Success"));
                                 System.out.println();
-                                break;
-
-                            case "5":
-                                // Log Out
-                                System.out.println("Terminating the application process");
-                                break;
-                        }
-
-                        if (message.equalsIgnoreCase("5")) {
-                            System.out.println("Player " + currentPlayer.getLogin() + " has logged out of the system.");
-                            playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Logout", "Success"));
+                            } catch (BaseException e) {
+                                System.out.println(e.getMessage());
+                                playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Checking transaction history", "Fail"));
+                            }
                             break;
-                        }
+                        case "5":
+                            // Log Out
+                            System.out.println("Terminating the application process");
+                            break;
                     }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+
+                    if (message.equalsIgnoreCase("5")) {
+                        System.out.println("Player " + currentPlayer.getLogin() + " has logged out of the system.");
+                        playerLogService.save(new PlayerLog(currentPlayer.getLogin(), "Logout", "Success"));
+                        break;
+                    }
                 }
+
             }
         }
     }
@@ -155,7 +172,7 @@ public class PlayerMenuModule {
      * @param scanner The scanner for user input.
      * @return A transaction ID (either generated or entered manually).
      */
-    public static String transactionIdAsker(Scanner scanner) {
+    public static Long transactionIdAsker(Scanner scanner) {
         System.out.println("Generate a unique transaction ID? Type Y/N");
         String yesNo = scanner.nextLine();
         String transactionID;
@@ -167,7 +184,7 @@ public class PlayerMenuModule {
                 transactionID = scanner.nextLine().trim();
             } while (transactionID.isEmpty() || transactionID.length() > 36);
         }
-        return transactionID;
+        return Long.parseLong(transactionID);
     }
 }
 

@@ -1,4 +1,4 @@
-package repoSingleton;
+package jbdcRepositories.repoSingleton;
 
 import jbdcRepositories.PlayerRepositoryImpl;
 import jbdcRepositories.connection.DatabaseManager;

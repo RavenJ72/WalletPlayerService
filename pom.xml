@@ -31,9 +31,13 @@
         <version.lombok>1.18.30</version.lombok>
         <version.testcontainers.pg>1.19.1</version.testcontainers.pg>
         <version.testcontainers.junit-jupiter>1.19.1</version.testcontainers.junit-jupiter>
+        <version.javax.servlet>4.0.1</version.javax.servlet>
+        <version.aspectj>1.9.20.1</version.aspectj>
 
         <!--plugins-->
         <version.maven-assembly-plugin>3.3.0</version.maven-assembly-plugin>
+        <version.plugin.war>3.3.1</version.plugin.war>
+        <version.plugin.aspectj>1.14.0</version.plugin.aspectj>
     </properties>
 
     <dependencies>
@@ -89,6 +93,66 @@
             <version>${version.testcontainers.junit-jupiter}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${version.javax.servlet}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${version.aspectj}</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>${version.plugin.aspectj}</version>
+                <configuration>
+                    <complianceLevel>16</complianceLevel>
+                    <source>16</source>
+                    <target>16</target>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <verbose>true</verbose>
+                    <Xlint>ignore</Xlint>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+
+
 </project>

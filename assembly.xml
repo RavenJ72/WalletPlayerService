@@ -1,0 +1,14 @@
+<assembly>
+    <id>my-war-assembly</id>
+    <formats>
+        <format>war</format>
+    </formats>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/</outputDirectory>
+            <unpack>true</unpack>
+            <useProjectArtifact>true</useProjectArtifact>
+            <scope>compile</scope>
+        </dependencySet>
+    </dependencySets>
+</assembly>

@@ -1,7 +1,7 @@
 package serviceSingleton;
 
 import applicationServices.services.BankAccountService;
-import repoSingleton.BankAccountRepositorySingleton;
+import jbdcRepositories.repoSingleton.BankAccountRepositorySingleton;
 import services.BankAccountServiceImpl;
 
 /**

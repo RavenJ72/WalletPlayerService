@@ -1,9 +1,9 @@
 package serviceSingleton;
 
 import applicationServices.services.PlayerService;
-import repoSingleton.BankAccountRepositorySingleton;
-import repoSingleton.PlayerRepositorySingleton;
-import repoSingleton.TransactionRepoSingleton;
+import jbdcRepositories.repoSingleton.BankAccountRepositorySingleton;
+import jbdcRepositories.repoSingleton.PlayerRepositorySingleton;
+import jbdcRepositories.repoSingleton.TransactionRepoSingleton;
 import services.PlayerServiceImpl;
 
 /**

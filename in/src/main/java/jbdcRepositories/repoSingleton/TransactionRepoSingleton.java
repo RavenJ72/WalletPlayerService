@@ -1,4 +1,4 @@
-package repoSingleton;
+package jbdcRepositories.repoSingleton;
 
 import jbdcRepositories.TransactionRepositoryImpl;
 import jbdcRepositories.connection.DatabaseManager;

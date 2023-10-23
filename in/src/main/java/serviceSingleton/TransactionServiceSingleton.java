@@ -1,7 +1,7 @@
 package serviceSingleton;
 
 import applicationServices.services.TransactionService;
-import repoSingleton.TransactionRepoSingleton;
+import jbdcRepositories.repoSingleton.TransactionRepoSingleton;
 import services.TransactionServiceImpl;
 
 /**

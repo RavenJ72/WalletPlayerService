@@ -1,7 +1,7 @@
 package serviceSingleton;
 
 import applicationServices.services.PlayerLogService;
-import repoSingleton.PlayerLogRepositorySingleton;
+import jbdcRepositories.repoSingleton.PlayerLogRepositorySingleton;
 import services.PlayerLogServiceImpl;
 
 /**

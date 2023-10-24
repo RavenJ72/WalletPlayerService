@@ -40,6 +40,8 @@ public class DatabaseManager {
         url = properties.getProperty("db.url");
         username = properties.getProperty("db.username");
         password = properties.getProperty("db.password");
+
+        makeMigrations(url);
     }
 
     /**
